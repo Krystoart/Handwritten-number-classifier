@@ -18,4 +18,4 @@ To start project:
 
 ## Route mappings
 
-By default project is exposed to localhost:5001
+By default project is exposed to localhost:5000
