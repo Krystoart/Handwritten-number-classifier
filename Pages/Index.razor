@@ -1,5 +1,31 @@
 @page "/"
 
-<h1>Hello, world!</h1>
+@using Microsoft.AspNetCore.Components.Web;
 
-Welcome to your new app.
+<h1>WRITTEN NUMBER CLASSIFIER</h1>
+
+@* <svg width="500" height="500" @onmousemove="@Mouse_Move"> *@
+<svg width="500" height="500" @onmousedown="@Add_Point">
+    <polyline fill="none" stroke="#0074d9" points="@PointString"
+        stroke-width="2" />
+</svg>
+<h1>@Coordinates</h1>
+
+
+@code {
+    public string PointString;
+    public double test;
+    protected string Coordinates { get; set; }
+     protected override void OnInitialized()
+    {
+        PointString = "20,20 40,25 60,40 80,120 120,140 200";
+    }
+    @* protected void Mouse_Move(MouseEventArgs e)
+    {
+        Coordinates = $"X = {e.ClientX } Y = {e.ClientY}";
+    } *@
+    protected void Add_Point(MouseEventArgs e)
+    {
+        PointString = PointString + $",{e.ClientX } {e.ClientY}";
+    }
+}
