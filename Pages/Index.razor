@@ -8,6 +8,15 @@
     <polyline fill="none" stroke="#0074d9" points="@PointString"
         stroke-width="4" />
 </svg>
+<button @onclick="@ClearDrawing">
+    Clear
+</button>
+<button>
+    Erasor
+</button>
+<button>
+    Guess
+</button>
 
 @code {
     public string PointString;
@@ -47,5 +56,10 @@
     protected void Add_Point(MouseEventArgs e)
     {
         PointString = PointString + $",{e.ClientY} {e.ClientX}";
+    }
+
+    protected void ClearDrawing(MouseEventArgs e)
+    {
+        PointString = "";
     }
 }
