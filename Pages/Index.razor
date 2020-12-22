@@ -4,28 +4,48 @@
 
 <h1>WRITTEN NUMBER CLASSIFIER</h1>
 
-@* <svg width="500" height="500" @onmousemove="@Mouse_Move"> *@
-<svg width="500" height="500" @onmousedown="@Add_Point">
+<svg style="border:1px solid black" width="@CanvasWidth" height="@CanvasHeight" @onmousedown="@OnMouseDown" @onmousemove="@Mouse_Move" @onmouseup="@OnMouseUp">
     <polyline fill="none" stroke="#0074d9" points="@PointString"
-        stroke-width="2" />
+        stroke-width="4" />
 </svg>
-<h1>@Coordinates</h1>
-
 
 @code {
     public string PointString;
-    public double test;
+    public double CanvasWidth;
+    public double CanvasHeight;
+    private bool pressed;
+    protected string prevCoordinates { get; set; }
     protected string Coordinates { get; set; }
-     protected override void OnInitialized()
+
+    protected override void OnInitialized()
     {
-        PointString = "20,20 40,25 60,40 80,120 120,140 200";
+        PointString = "";
+        CanvasWidth = 500;
+        CanvasHeight = 500;
+        pressed = false;
     }
-    @* protected void Mouse_Move(MouseEventArgs e)
+    protected void OnMouseDown(MouseEventArgs e)
     {
-        Coordinates = $"X = {e.ClientX } Y = {e.ClientY}";
-    } *@
+        prevCoordinates = $",{e.ClientY - 162} {e.ClientX}";
+        if(String.IsNullOrEmpty(PointString)){
+            PointString = PointString + $"{e.ClientY - 162}";
+        }
+        PointString = PointString + prevCoordinates;
+        pressed = true;
+    }
+    protected void OnMouseUp(MouseEventArgs e)
+    {
+        pressed = false;
+    }
+    protected void Mouse_Move(MouseEventArgs e)
+    {
+        if(!pressed)return;
+        Coordinates = $",{e.ClientY - 162} {e.ClientX}";
+        PointString = PointString + Coordinates;
+        prevCoordinates = Coordinates;
+    }
     protected void Add_Point(MouseEventArgs e)
     {
-        PointString = PointString + $",{e.ClientX } {e.ClientY}";
+        PointString = PointString + $",{e.ClientY} {e.ClientX}";
     }
 }
