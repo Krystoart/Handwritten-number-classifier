@@ -3,21 +3,20 @@
 @using Microsoft.AspNetCore.Components.Web;
 
 <h1>WRITTEN NUMBER CLASSIFIER</h1>
-<div style="display:flex;flex-direction:row;">
-    <div width="50%" height="70%" style="display:flex;flex-direction:column;background-color: #613468;border-radius: 25px;">
-        <svg style="border:1px solid black;background-color: white;margin:0.7em" width="@CanvasWidth" height="@CanvasHeight"
+<div class="content">
+    <div class="canvas">
+        <svg class="svg" width="@CanvasWidth" height="@CanvasHeight"
             @onmousedown="@OnMouseDown" @onmousemove="@Mouse_Move" @onmouseup="@OnMouseUp">
-            <polyline fill="none" stroke="#0074d9" points="@PointString"
-                stroke-width="4" />
+            <polyline class="poly" points="@PointString" />
         </svg>
         <div style="display:flex;flex-direction:row;margin:1em">
-            <button @onclick="@ClearDrawing" style="background-color:#B4FAC8;width:6em;height:2.5em;font-weight:bold">
+            <button @onclick="@ClearDrawing" class="button">
                 Clear
             </button>
-            <button style="background-color:#B4FAC8;width:6em;height:2.5em;margin-left:1em;font-weight:bold">
+            <button class="button">
                 Erasor
             </button>
-            <button style="background-color:#B4FAC8;width:6em;height:2.5em;margin-left:5em;font-weight:bold">
+            <button class="button">
                 Guess
             </button>
         </div>

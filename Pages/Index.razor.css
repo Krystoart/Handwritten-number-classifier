@@ -1,0 +1,33 @@
+.content{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-evenly;
+}
+
+.canvas{
+    display:flex;
+    flex-direction:column;
+    background-color: #613468;
+    border-radius: 25px;
+    height:70%;
+}
+
+.svg{
+    border:1px solid black;
+    background-color: white;
+    margin:0.7em;
+}
+
+.poly{
+    fill:none;
+    stroke:black;
+    stroke-width:4;
+}
+
+.button{
+    background-color:#B4FAC8;
+    width:6em;
+    height:2.5em;
+    margin-left:1em;
+    font-weight:bold;
+}
