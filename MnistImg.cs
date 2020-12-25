@@ -19,4 +19,23 @@ public class MnistImg
                 this.pixels[i][j] = pixels[i][j];
     }
 
+    public override string ToString()
+    {
+        string s = "";
+        for (int i = 0; i < width; ++i)
+        {
+            for (int j = 0; j < height; ++j)
+            {
+                if (this.pixels[i][j] == 0)
+                    s += " "; // white
+                else if (this.pixels[i][j] == 255)
+                    s += "0"; // black
+                else
+                    s += "."; // gray
+            }
+            s += "\n";
+        }
+        s += ("Label: {0}", this.label.ToString());
+        return s;
+    }
 }
