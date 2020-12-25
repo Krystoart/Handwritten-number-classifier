@@ -31,5 +31,13 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+    <script>
+    function accessDOMElement(e) {
+        x=e.clientX;
+        y=e.clientY;
+        let svg = document.getElementById('mainSvg');
+        return "" + (Number(x) - Number(svg.getBoundingClientRect().left))+ " " + (Number(y) - Number(svg.getBoundingClientRect().top)) + "";
+    }
+    </script>
 </body>
 </html>
