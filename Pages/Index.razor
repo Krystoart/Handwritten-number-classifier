@@ -1,11 +1,11 @@
 @page "/"
-
+@inject IJSRuntime jsRuntime
 @using Microsoft.AspNetCore.Components.Web;
 
 <h1>WRITTEN NUMBER CLASSIFIER</h1>
 <div class="content">
     <div class="canvas">
-        <svg class="svg" width="@CanvasWidth" height="@CanvasHeight"
+        <svg id="mainSvg" class="svg" width="@CanvasWidth" height="@CanvasHeight"
             @onmousedown="@OnMouseDown" @onmousemove="@Mouse_Move" @onmouseup="@OnMouseUp">
             <polyline class="poly" points="@PointString" />
         </svg>
@@ -28,6 +28,9 @@
     public double CanvasWidth;
     public double CanvasHeight;
     private bool pressed;
+    private string Y;
+    private string X;
+
     protected string prevCoordinates { get; set; }
     protected string Coordinates { get; set; }
 
@@ -38,13 +41,14 @@
         CanvasHeight = 500;
         pressed = false;
     }
-    protected void OnMouseDown(MouseEventArgs e)
+    protected async void OnMouseDown(MouseEventArgs e)
     {
-        prevCoordinates = $",{e.ClientY - 162} {e.ClientX}";
+        await SetCoordinates(e);
+
         if(String.IsNullOrEmpty(PointString)){
-            PointString = PointString + $"{e.ClientY - 162}";
+            PointString = X;
         }
-        PointString = PointString + prevCoordinates;
+        @* PointString = PointString + Coordinates; *@
         pressed = true;
     }
     protected void OnMouseUp(MouseEventArgs e)
@@ -54,13 +58,15 @@
     protected void Mouse_Move(MouseEventArgs e)
     {
         if(!pressed)return;
-        Coordinates = $",{e.ClientY - 162} {e.ClientX}";
-        PointString = PointString + Coordinates;
-        prevCoordinates = Coordinates;
+        SetCoordinates(e);
+        PointString = PointString + "," + Y + " " + X;
     }
-    protected void Add_Point(MouseEventArgs e)
+
+    protected async Task SetCoordinates(MouseEventArgs e)
     {
-        PointString = PointString + $",{e.ClientY} {e.ClientX}";
+        Coordinates = await jsRuntime.InvokeAsync<string>("accessDOMElement", e);
+        X = Coordinates.Split(" ")[0];
+        Y = Coordinates.Split(" ")[1];
     }
 
     protected void ClearDrawing(MouseEventArgs e)
