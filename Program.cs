@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 
 namespace VPL_course
@@ -11,6 +11,9 @@ namespace VPL_course
 
         static void Main(string[] args)
         {
+            MnistImages = LoadData(pixelTrainingFile, labelTrainingFile, 2);
+        }
+
         private static MnistImg[] LoadData(string pixelFilePath, string labelFilePath, int imgAmount)
         {
             try
