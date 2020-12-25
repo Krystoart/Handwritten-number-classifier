@@ -279,4 +279,7 @@ __pycache__/
 !.vscode/extensions.json
 *.code-workspace
 
+# Training data
+training-data
+
 # End of https://www.toptal.com/developers/gitignore/api/vscode,aspnetcore
