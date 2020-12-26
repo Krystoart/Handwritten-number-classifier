@@ -7,6 +7,8 @@ namespace VPL_course
     {
         private static string pixelTrainingFile = @"./training-data/train-images-idx3-ubyte";
         private static string labelTrainingFile = @"./training-data/train-labels-idx1-ubyte";
+        private static string pixelTestingFile = @"./training-data/t10k-images-idx3-ubyte";
+        private static string labelTestingFile = @"./training-data/t10k-labels-idx1-ubyte";
         private static MnistImg[] MnistImages = null;
 
         static void Main(string[] args)
