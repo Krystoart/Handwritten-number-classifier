@@ -7,7 +7,13 @@
     <div class="canvas">
         <svg id="mainSvg" class="svg" width="@CanvasWidth" height="@CanvasHeight"
             @onmousedown="@OnMouseDown" @onmousemove="@Mouse_Move" @onmouseup="@OnMouseUp">
-            <polyline class="poly" points="@PointString" />
+            @if(polylinesHistoric.Capacity > 0){
+                @foreach (var polyline in polylinesHistoric)
+                {
+                    @polyline
+                }
+            }
+            @polylineCurrent
         </svg>
         <div style="display:flex;flex-direction:row;margin:1em">
             <button @onclick="@ClearDrawing" class="button">
@@ -31,8 +37,8 @@
     private string Y;
     private string X;
 
-    protected string prevCoordinates { get; set; }
-    protected string Coordinates { get; set; }
+    private List<RenderFragment> polylinesHistoric = new List<RenderFragment>();
+    private RenderFragment polylineCurrent;
 
     protected override void OnInitialized()
     {
@@ -44,16 +50,15 @@
     protected async void OnMouseDown(MouseEventArgs e)
     {
         await SetCoordinates(e);
-
-        if(String.IsNullOrEmpty(PointString)){
-            PointString = X;
-        }
-        @* PointString = PointString + Coordinates; *@
+        PointString = X;
         pressed = true;
+
+        polylineCurrent = CreateComponent();
     }
     protected void OnMouseUp(MouseEventArgs e)
     {
         pressed = false;
+        polylinesHistoric.Add(CreateComponentStatic(PointString));
     }
     protected void Mouse_Move(MouseEventArgs e)
     {
@@ -64,7 +69,7 @@
 
     protected async Task SetCoordinates(MouseEventArgs e)
     {
-        Coordinates = await jsRuntime.InvokeAsync<string>("accessDOMElement", e);
+        var Coordinates = await jsRuntime.InvokeAsync<string>("accessDOMElement", e);
         X = Coordinates.Split(" ")[0];
         Y = Coordinates.Split(" ")[1];
     }
@@ -73,4 +78,23 @@
     {
         PointString = "";
     }
+     private RenderFragment CreateComponent() => builder =>
+    {
+        builder.OpenElement(1, "polyline");
+        builder.AddAttribute(2, "points", PointString);
+        builder.AddAttribute(3, "fill", "none");
+        builder.AddAttribute(4, "stroke-width", "4");
+        builder.AddAttribute(5, "stroke", "black");
+        builder.CloseElement();
+    };
+
+     private RenderFragment CreateComponentStatic(string points) => builder =>
+    {
+        builder.OpenElement(1, "polyline");
+        builder.AddAttribute(2, "points", points);
+        builder.AddAttribute(3, "fill", "none");
+        builder.AddAttribute(4, "stroke-width", "4");
+        builder.AddAttribute(5, "stroke", "black");
+        builder.CloseElement();
+    };
 }
