@@ -11,24 +11,48 @@ class MnistList : IEnumerable<MnistItem>
     public int Columns { get; }
 }
 }
-{
-    public int width; // 28
-    public int height; // 28
-    public byte[][] pixels; // 0 - 255 (white - black)
-    public byte label; // 0 - 9
-    public MnistImg(int width, int height, byte[][] pixels, byte label)
-    {
-        this.width = width;
-        this.height = height;
-        this.label = label;
 
-        this.pixels = new byte[height][];
-        for (int i = 0; i < this.pixels.Length; ++i)
-            this.pixels[i] = new byte[width];
+public class MnistItem
+{
+    public byte[][] Pixels { get; } // 0 - 255 (white - black)
+    public byte Label { get; } // 0 - 9
+    public int Width { get; } // 28
+    public int Height { get; } // 28
+    public MnistItem(int width, int height, byte[][] pixels, byte label)
+    {
+        this.Width = width;
+        this.Height = height;
+        this.Label = label;
+
+        this.Pixels = new byte[height][];
+        for (int i = 0; i < this.Pixels.Length; ++i)
+            this.Pixels[i] = new byte[width];
 
         for (int i = 0; i < height; ++i)
             for (int j = 0; j < width; ++j)
-                this.pixels[i][j] = pixels[i][j];
+                this.Pixels[i][j] = pixels[i][j];
+    }
+
+    public override string ToString()
+    {
+        string s = "";
+        for (int i = 0; i < this.Height; ++i)
+        {
+            for (int j = 0; j < this.Width; ++j)
+            {
+                if (this.Pixels[i][j] == 0)
+                    s += " "; // white
+                else if (this.Pixels[i][j] == 255)
+                    s += "0"; // black
+                else
+                    s += "."; // gray
+            }
+            s += "\n";
+        }
+        s += ("Label: ", this.Label.ToString());
+        return s;
+    }
+}
     }
 
     public override string ToString()
