@@ -91,7 +91,7 @@ class MnistList : IEnumerable<MnistItem>
     {
         foreach (MnistItem item in images)
         {
-            yield return item; // ^Test if this works with foreach
+            yield return item;
         }
     }
 
