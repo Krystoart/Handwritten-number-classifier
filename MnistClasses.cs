@@ -1,4 +1,16 @@
-public class MnistImg
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+class MnistList : IEnumerable<MnistItem>
+{
+    MnistItem[] images;
+
+    public int Length { get; }
+    public int Rows { get; }
+    public int Columns { get; }
+}
+}
 {
     public int width; // 28
     public int height; // 28
