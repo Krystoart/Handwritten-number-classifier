@@ -22,6 +22,7 @@ class MnistList : IEnumerable<MnistItem>
         int magic1 = ReverseBytes(brImages.ReadInt32());
         int magic2 = ReverseBytes(brLabels.ReadInt32());
 
+        // Tests if dataset magic numbers are correct
         if (magic1 != 2051)
             throw new Exception("Not a valid MNIST image data set");
 
@@ -31,6 +32,7 @@ class MnistList : IEnumerable<MnistItem>
         int imgCount = ReverseBytes(brImages.ReadInt32());
         int labelCount = ReverseBytes(brLabels.ReadInt32());
 
+        // Checks if for each image there is a label
         if (imgCount != labelCount)
             throw new Exception("Number of items of the two files is not the same");
 
