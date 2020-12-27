@@ -19,8 +19,8 @@
             <button @onclick="@ClearDrawing" class="button">
                 Clear
             </button>
-            <button class="button">
-                Erasor
+            <button @onclick="@ClearLast" class="button">
+                Back
             </button>
             <button class="button">
                 Guess
@@ -76,8 +76,16 @@
 
     protected void ClearDrawing(MouseEventArgs e)
     {
-        PointString = "";
+        polylinesHistoric.Clear();
+        polylineCurrent = null;
     }
+
+    protected void ClearLast(MouseEventArgs e)
+    {
+        polylinesHistoric.RemoveAt(polylinesHistoric.Count() - 1);
+        polylineCurrent = null;
+    }
+
      private RenderFragment CreateComponent() => builder =>
     {
         builder.OpenElement(1, "polyline");
