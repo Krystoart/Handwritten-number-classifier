@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace VPL_course
 {
@@ -14,7 +13,10 @@ namespace VPL_course
         {
             try
             {
+                Console.WriteLine("Loading data in memory...");
                 MnistList trainingData = new MnistList(imagePath: pixelTrainingFile, labelPath: labelTrainingFile);
+                Console.WriteLine("Data loading finished, Training amount: {0}, TestLength: {1}", trainingData.Length, 0);
+
             }
             catch (Exception ex)
             {
