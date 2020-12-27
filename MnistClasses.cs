@@ -77,6 +77,12 @@ class MnistList : IEnumerable<MnistItem>
         brLabels.Close();
     }
 
+    public static int ReverseBytes(int v)
+    {
+        byte[] intBytes = BitConverter.GetBytes(v);
+        Array.Reverse(intBytes);
+        return BitConverter.ToInt32(intBytes);
+    }
 public class MnistItem
 {
     public byte[][] Pixels { get; } // 0 - 255 (white - black)
