@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+
 class MnistList : IEnumerable<MnistItem>
 {
     MnistItem[] images;
@@ -83,6 +84,21 @@ class MnistList : IEnumerable<MnistItem>
         Array.Reverse(intBytes);
         return BitConverter.ToInt32(intBytes);
     }
+
+    public IEnumerator<MnistItem> GetEnumerator()
+    {
+        foreach (MnistItem item in images)
+        {
+            yield return item; // ^Test if this works with foreach
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return (IEnumerator)GetEnumerator();
+    }
+}
+
 public class MnistItem
 {
     public byte[][] Pixels { get; } // 0 - 255 (white - black)
