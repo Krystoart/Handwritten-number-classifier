@@ -22,8 +22,34 @@
             <button @onclick="@ClearLast" class="button">
                 Back
             </button>
-            <button class="button">
+            <button @onclick="@GuessImage" class="button">
                 Guess
+            </button>
+        </div>
+    </div>
+    <div class="canvas">
+        <div class="history">
+            <div class="guessed">
+                testing
+            </div>
+            @if(guesses.Capacity > 0){
+                @foreach (var guess in guesses)
+                {
+                    <div class="guessed">
+                        @guess
+                    </div>
+                }
+            }
+        </div>
+        <div style="display:flex;flex-direction:row;margin:1em">
+            <button class="button">
+                Save
+            </button>
+            <button class="button">
+                Edit
+            </button>
+            <button class="button">
+                Delete
             </button>
         </div>
     </div>
@@ -37,6 +63,7 @@
     private string Y;
     private string X;
 
+    private List<RenderFragment> guesses = new List<RenderFragment>();
     private List<RenderFragment> polylinesHistoric = new List<RenderFragment>();
     private RenderFragment polylineCurrent;
 
@@ -60,10 +87,10 @@
         pressed = false;
         polylinesHistoric.Add(CreateComponentStatic(PointString));
     }
-    protected void Mouse_Move(MouseEventArgs e)
+    protected async void Mouse_Move(MouseEventArgs e)
     {
         if(!pressed)return;
-        SetCoordinates(e);
+        await SetCoordinates(e);
         PointString = PointString + "," + Y + " " + X;
     }
 
@@ -74,7 +101,7 @@
         Y = Coordinates.Split(" ")[1];
     }
 
-    protected void ClearDrawing(MouseEventArgs e)
+    protected void ClearDrawing()
     {
         polylinesHistoric.Clear();
         polylineCurrent = null;
@@ -103,6 +130,26 @@
         builder.AddAttribute(3, "fill", "none");
         builder.AddAttribute(4, "stroke-width", "4");
         builder.AddAttribute(5, "stroke", "black");
+        builder.CloseElement();
+    };
+
+    protected void GuessImage()
+    {
+        if(polylinesHistoric.Count() > 0){
+            RenderFragment svg = CreateSvg(polylinesHistoric);
+            guesses.Add(svg);
+        }
+    }
+
+     private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
+    {
+        int index = 0;
+        builder.OpenElement(index++, "svg");
+        builder.AddAttribute(index++, "viewBox", "0 0 100 100");
+        builder.AddAttribute(index++, "preserveAspectRatio", "xMin meet");
+        foreach (RenderFragment polyline in polylines){
+            builder.AddContent(index++, polyline);
+        }
         builder.CloseElement();
     };
 }
