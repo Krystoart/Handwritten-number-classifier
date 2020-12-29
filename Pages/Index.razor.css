@@ -7,6 +7,7 @@
 .canvas{
     display:flex;
     flex-direction:column;
+    align-content: center;
     background-color: #613468;
     border-radius: 25px;
     height:70%;
@@ -29,4 +30,24 @@
     height:2.5em;
     margin-left:1em;
     font-weight:bold;
+}
+
+.history{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width:100%;
+    height:100%;
+}
+
+.guessed{
+    display: flex;
+    background-color:#B4FAC8;
+    width: 15em;
+    height: 5em;
+    margin: 1em;
+}
+
+.guessed:hover {
+    background-color: red;
 }
