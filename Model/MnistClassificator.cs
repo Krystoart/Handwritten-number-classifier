@@ -24,6 +24,14 @@ namespace MnistClassificator
             return fullPath;
         }
 
+        private static float[] analyze(InputData input)
+        {
+            var predEngine = mlContext.Model.CreatePredictionEngine<InputData, OutPutData>(trainedModel);
+
+            var output = predEngine.Predict(input);
+
+            return output.Score;
+        }
     }
 
 }
