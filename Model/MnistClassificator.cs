@@ -7,6 +7,10 @@ namespace MnistClassificator
 {
     class Classificator
     {
+        private static string BaseModelsRelativePath = @"../../../MLModels";
+        private static string ModelRelativePath = $"{BaseModelsRelativePath}/Model.zip";
+        private static string ModelPath = GetAbsolutePath(ModelRelativePath);
+
 
     }
 
