@@ -1,6 +1,7 @@
 @page "/"
 @inject IJSRuntime jsRuntime
 @using Microsoft.AspNetCore.Components.Web;
+@using System.Text.RegularExpressions;
 
 <h1>WRITTEN NUMBER CLASSIFIER</h1>
 <div class="content">
@@ -63,6 +64,7 @@
     private string Y;
     private string X;
 
+    private List<string> scaledCurrentDrawingAsString = new List<string>();
     private List<RenderFragment> guesses = new List<RenderFragment>();
     private List<RenderFragment> polylinesHistoric = new List<RenderFragment>();
     private RenderFragment polylineCurrent;
@@ -86,6 +88,7 @@
     {
         pressed = false;
         polylinesHistoric.Add(CreateComponentStatic(PointString));
+        scaledCurrentDrawingAsString.Add(ScaleDown(PointString));
     }
     protected async void Mouse_Move(MouseEventArgs e)
     {
@@ -135,10 +138,10 @@
 
     protected void GuessImage()
     {
-        if(polylinesHistoric.Count() > 0){
-            RenderFragment svg = CreateSvg(polylinesHistoric);
-            guesses.Add(svg);
-        }
+        var item = new List<RenderFragment>();
+        scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x)));
+        RenderFragment svg = CreateSvg(item);
+        guesses.Add(svg);
     }
 
      private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
@@ -152,4 +155,25 @@
         }
         builder.CloseElement();
     };
+
+    private string ScaleDown(string pointsToRescale){
+        string[] splittedPoints = pointsToRescale.Split(',');
+        string newPoints = "";
+        foreach(string point in splittedPoints){
+            if(Regex.Match(point, @"\d+\s\d+").Success){
+                string[] pair = point.Split(" ");
+                Double x = Double.Parse(pair[0]);
+                Double y = Double.Parse(pair[1]);
+                x *= 0.2;
+                y *= 0.2;
+                newPoints += "," + x.ToString() + " " + y.ToString();
+            }
+            else{
+                Double p = Double.Parse(point);
+                p *= 0.2;
+                newPoints+= p.ToString();
+            }
+        }
+        return newPoints;
+    }
 }
