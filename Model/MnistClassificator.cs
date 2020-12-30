@@ -14,6 +14,15 @@ namespace MnistClassificator
         private static MLContext mlContext = new MLContext();
         private static ITransformer trainedModel = mlContext.Model.Load(ModelPath, out var modelInputSchema);
 
+        public static string GetAbsolutePath(string relativePath)
+        {
+            FileInfo _dataRoot = new FileInfo(typeof(Classificator).Assembly.Location);
+            string assemblyFolderPath = _dataRoot.Directory.FullName;
+
+            string fullPath = Path.Combine(assemblyFolderPath, relativePath);
+
+            return fullPath;
+        }
 
     }
 
