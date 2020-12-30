@@ -12,6 +12,10 @@ This is a simple console app.
 
     - ASP.NET core 3.1
 
+## SDK & Runtime version
+
+    3.1.404
+
 ## Setup
 
 Prerequisites:
