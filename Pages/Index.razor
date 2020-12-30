@@ -142,6 +142,11 @@
         scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x)));
         RenderFragment svg = CreateSvg(item);
         guesses.Add(svg);
+
+        // Clear drawings
+        scaledCurrentDrawingAsString.Clear();
+        polylinesHistoric.Clear();
+        polylineCurrent = null;
     }
 
      private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
