@@ -113,7 +113,7 @@
         polylineCurrent = null;
     }
 
-     private RenderFragment CreateComponent() => builder =>
+    private RenderFragment CreateComponent() => builder =>
     {
         builder.OpenElement(1, "polyline");
         builder.AddAttribute(2, "points", PointString);
@@ -123,7 +123,7 @@
         builder.CloseElement();
     };
 
-     private RenderFragment CreateComponentStatic(string points) => builder =>
+    private RenderFragment CreateComponentStatic(string points) => builder =>
     {
         builder.OpenElement(1, "polyline");
         builder.AddAttribute(2, "points", points);
@@ -141,7 +141,7 @@
         }
     }
 
-     private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
+    private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
     {
         int index = 0;
         builder.OpenElement(index++, "svg");
