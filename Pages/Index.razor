@@ -4,7 +4,7 @@
 @using System.Text.RegularExpressions;
 
 <h1>WRITTEN NUMBER CLASSIFIER</h1>
-<div class="content">
+<div class="content" @onmousemove="@MouseIsOutOfSvg">
     <div class="canvas">
         <svg id="mainSvg" class="svg" width="@CanvasWidth" height="@CanvasHeight"
             @onmousedown="@OnMouseDown" @onmousemove="@Mouse_Move" @onmouseup="@OnMouseUp">
@@ -63,6 +63,7 @@
     private bool pressed;
     private string Y;
     private string X;
+    private bool mouseIsOutOfSvg;
 
     private List<string> scaledCurrentDrawingAsString = new List<string>();
     private List<RenderFragment> guesses = new List<RenderFragment>();
@@ -90,11 +91,21 @@
         polylinesHistoric.Add(CreateComponentStatic(PointString));
         scaledCurrentDrawingAsString.Add(ScaleDown(PointString));
     }
+
+    protected async void MouseIsOutOfSvg(MouseEventArgs e)
+    {
+       mouseIsOutOfSvg = await jsRuntime.InvokeAsync<bool>("MouseIsOutOfSvg", e);
+    }
+
     protected async void Mouse_Move(MouseEventArgs e)
     {
         if(!pressed)return;
         await SetCoordinates(e);
         PointString = PointString + "," + Y + " " + X;
+        if(mouseIsOutOfSvg)
+        {
+            OnMouseUp(e);
+        }
     }
 
     protected async Task SetCoordinates(MouseEventArgs e)
