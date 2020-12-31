@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.ML;
 using System.IO;
 using VPL_course.DataStructures;
@@ -27,6 +27,9 @@ namespace VPL_course
                 MnistList testingData = new MnistList(imagePath: pixelTestingFile, labelPath: labelTestingFile);
                 Console.WriteLine("Data loading finished, Training amount: {0}, TestLength: {1}", trainingData.Length, testingData.Length);
 
+                MLContext mlContext = new MLContext();
+                Train(mlContext, trainingData, testingData);
+                TestSomePredictions(mlContext);
             }
             catch (Exception ex)
             {
