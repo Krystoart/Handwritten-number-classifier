@@ -123,7 +123,8 @@
 
     protected void ClearLast(MouseEventArgs e)
     {
-        polylinesHistoric.RemoveAt(polylinesHistoric.Count() - 1);
+        if (polylinesHistoric.Count > 0)
+            polylinesHistoric.RemoveAt(polylinesHistoric.Count() - 1);
         polylineCurrent = null;
     }
 
