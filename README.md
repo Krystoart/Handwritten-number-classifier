@@ -4,6 +4,7 @@
 
     - ASP.NET core 5.0
     - Blazor
+    - ML.NET
 
 ## Setup
 
@@ -12,7 +13,6 @@ Prerequisites:
 - .NET toolchain - [link](https://dotnet.microsoft.com/learn/aspnet/blazor-tutorial/intro)
 
 To start project:
-
 
     dotnet watch run
 
