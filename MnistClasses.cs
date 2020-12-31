@@ -153,48 +153,4 @@ public class MnistItem
     }
 }
 
-class NomalizedMnistItem
-{
-    public float[][] Pixels { get; } // 0 - 1 (white - black)
-    public float[] Label { get; } // 0 - 9
-    public int Width { get; } // 28
-    public int Height { get; } // 28
 
-    public NomalizedMnistItem(MnistItem item)
-    {
-        this.Width = item.Width;
-        this.Height = item.Height;
-
-        this.Label = new float[10];
-        this.Label[item.Label] = 1.0f;
-
-        this.Pixels = new float[this.Width][];
-        for (int i = 0; i < this.Pixels.Length; ++i)
-            this.Pixels[i] = new float[this.Height];
-
-        // This turns the whole image into a grid of values between 0 and 1
-        for (int i = 0; i < this.Width; ++i)
-            for (int j = 0; j < this.Height; ++j)
-                this.Pixels[i][j] = ((float)item.Pixels[i][j]) / byte.MaxValue;
-    }
-
-    public override string ToString()
-    {
-        string s = "";
-        for (int i = 0; i < this.Height; ++i)
-        {
-            for (int j = 0; j < this.Width; ++j)
-            {
-                if (this.Pixels[i][j] == 0)
-                    s += " "; // white
-                else if (this.Pixels[i][j] == 1)
-                    s += "0"; // black
-                else
-                    s += "."; // gray
-            }
-            s += "\n";
-        }
-        s += ("Label: "+this.Label.ToString());
-        return s;
-    }
-}
