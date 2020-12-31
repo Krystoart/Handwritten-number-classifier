@@ -103,6 +103,8 @@ class MnistList : IEnumerable<MnistItem>
 
 public class MnistItem
 {
+    [ColumnName("Pixels")]
+    [VectorType(784)]
     public float[] Pixels { get; } // 0 - 1 (white - black)
     public float Label { get; } // 0 - 9
     public int Width { get; } // 28
