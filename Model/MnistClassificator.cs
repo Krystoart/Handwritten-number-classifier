@@ -28,6 +28,7 @@ namespace MnistClassificator
             if (image.Length != 28)
                 throw new Exception("Image length is not 28.");
 
+            MnistItem imageObject = new MnistItem(width: 28, height: 28, pixels: image);
 
             var output = predEngine.Predict(input);
 
