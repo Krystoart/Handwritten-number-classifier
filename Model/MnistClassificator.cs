@@ -25,7 +25,9 @@ namespace MnistClassificator
 
         public static float[] Analyze(byte[][] image)
         {
-            var predEngine = mlContext.Model.CreatePredictionEngine<InputData, OutPutData>(trainedModel);
+            if (image.Length != 28)
+                throw new Exception("Image length is not 28.");
+
 
             var output = predEngine.Predict(input);
 
