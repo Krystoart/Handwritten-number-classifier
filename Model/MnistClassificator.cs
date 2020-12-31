@@ -30,7 +30,9 @@ namespace MnistClassificator
 
             MnistItem imageObject = new MnistItem(width: 28, height: 28, pixels: image);
 
-            var output = predEngine.Predict(input);
+            var predEngine = mlContext.Model.CreatePredictionEngine<MnistItem, MnistOutPutData>(trainedModel);
+
+            var output = predEngine.Predict(imageObject);
 
             return output.Score;
         }
