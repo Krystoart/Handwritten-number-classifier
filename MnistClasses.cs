@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.ML.Data;
 
 class MnistList : IEnumerable<MnistItem>
 {
@@ -153,4 +154,8 @@ public class MnistItem
     }
 }
 
-
+class MnistOutPutData
+{
+    [ColumnName("Score")]
+    public float[] Score;
+}
