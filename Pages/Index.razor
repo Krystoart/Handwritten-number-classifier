@@ -130,7 +130,9 @@
 
     protected void ClearLast(MouseEventArgs e)
     {
-        polylinesHistoric.RemoveAt(polylinesHistoric.Count() - 1);
+        if(polylinesHistoric.Count() > 0){
+            polylinesHistoric.RemoveAt(polylinesHistoric.Count() - 1);
+        }
         polylineCurrent = null;
     }
 
@@ -156,15 +158,18 @@
 
     protected void GuessImage()
     {
-        var item = new List<RenderFragment>();
-        scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x)));
-        RenderFragment svg = CreateSvg(item);
-        guesses.Add(svg);
+        if(scaledCurrentDrawingAsString.Count() > 0)
+        {
+            var item = new List<RenderFragment>();
+            scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x)));
+            RenderFragment svg = CreateSvg(item);
+            guesses.Add(svg);
 
-        // Clear drawings
-        scaledCurrentDrawingAsString.Clear();
-        polylinesHistoric.Clear();
-        polylineCurrent = null;
+            // Clear drawings
+            scaledCurrentDrawingAsString.Clear();
+            polylinesHistoric.Clear();
+            polylineCurrent = null;
+        }
     }
 
      private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
