@@ -19,7 +19,8 @@ namespace VPL_course
             {
                 Console.WriteLine("Loading data in memory...");
                 MnistList trainingData = new MnistList(imagePath: pixelTrainingFile, labelPath: labelTrainingFile);
-                Console.WriteLine("Data loading finished, Training amount: {0}, TestLength: {1}", trainingData.Length, 0);
+                MnistList testingData = new MnistList(imagePath: pixelTestingFile, labelPath: labelTestingFile);
+                Console.WriteLine("Data loading finished, Training amount: {0}, TestLength: {1}", trainingData.Length, testingData.Length);
 
             }
             catch (Exception ex)
