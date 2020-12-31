@@ -23,7 +23,7 @@ namespace MnistClassificator
             return fullPath;
         }
 
-        private static float[] analyze(InputData input)
+        public static float[] Analyze(byte[][] image)
         {
             var predEngine = mlContext.Model.CreatePredictionEngine<InputData, OutPutData>(trainedModel);
 
