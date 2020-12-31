@@ -103,8 +103,8 @@ class MnistList : IEnumerable<MnistItem>
 
 public class MnistItem
 {
-    public byte[][] Pixels { get; } // 0 - 255 (white - black)
-    public byte Label { get; } // 0 - 9
+    public float[] Pixels { get; } // 0 - 1 (white - black)
+    public float Label { get; } // 0 - 9
     public int Width { get; } // 28
     public int Height { get; } // 28
     public MnistItem(int width, int height, byte[][] pixels, byte label)
