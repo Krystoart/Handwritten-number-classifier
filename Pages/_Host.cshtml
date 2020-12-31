@@ -39,5 +39,16 @@
         return "" + (Number(x) - Number(svg.getBoundingClientRect().left))+ " " + (Number(y) - Number(svg.getBoundingClientRect().top)) + "";
     }
     </script>
+    <script>
+    function MouseIsOutOfSvg(e) {
+        x=e.clientX;
+        y=e.clientY;
+        let svg = document.getElementById('mainSvg');
+        return Number(x) < Number(svg.getBoundingClientRect().left)
+        || Number(x) > Number(svg.getBoundingClientRect().right)
+         || Number(y) < Number(svg.getBoundingClientRect().top)
+         || Number(y) > Number(svg.getBoundingClientRect().bottom);
+    }
+    </script>
 </body>
 </html>

@@ -25,7 +25,7 @@
 }
 
 .button{
-    background-color:#B4FAC8;
+    background-color:#CFDCE9;
     width:6em;
     height:2.5em;
     margin-left:1em;
@@ -42,7 +42,7 @@
 
 .guessed{
     display: flex;
-    background-color:#B4FAC8;
+    background-color:#CFDCE9;
     width: 15em;
     height: 5em;
     margin: 1em;
