@@ -23,6 +23,11 @@ namespace MnistClassificator
             return fullPath;
         }
 
+        /*
+            Input parameters
+            ----------------
+            image: 28x28 2d array, each value is between 0 and 255 (white - black)
+        */
         public static float[] Analyze(byte[][] image)
         {
             if (image.Length != 28)
@@ -37,5 +42,4 @@ namespace MnistClassificator
             return output.Score;
         }
     }
-
 }
