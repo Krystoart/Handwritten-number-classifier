@@ -5,7 +5,7 @@ using System.IO;
 
 class MnistList : IEnumerable<MnistItem>
 {
-    MnistItem[] images;
+    public MnistItem[] images;
 
     public int Length { get; }
     public int Rows { get; }
