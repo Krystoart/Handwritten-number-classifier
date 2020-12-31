@@ -50,5 +50,27 @@
          || Number(y) > Number(svg.getBoundingClientRect().bottom);
     }
     </script>
+    <script>
+    function SaveSvg() {
+        var mySVG = document.getElementById('mainSvg'),      // Inline SVG element
+        tgtImage = document.getElementById('mainCanvas'),      // Where to draw the result
+        can      = document.createElement('canvas'), // Not shown on page
+        ctx      = can.getContext('2d'),
+        loader   = new Image;                        // Not shown on page
+
+        loader.width  = can.width  = tgtImage.width;
+        loader.height = can.height = tgtImage.height;
+        let waitingForResult = true;
+        let result = "";
+        loader.onload = function(){
+            ctx.drawImage( loader, 0, 0, loader.width, loader.height );
+            tgtImage.src = can.toDataURL();
+            result = tgtImage.src;
+            waitingForResult = false;
+        };
+        var svgAsXML = (new XMLSerializer).serializeToString( mySVG );
+        loader.src = 'data:image/svg+xml,' + encodeURIComponent( svgAsXML );
+    }
+    </script>
 </body>
 </html>
