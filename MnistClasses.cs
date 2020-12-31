@@ -136,18 +136,17 @@ public class MnistItem
     public override string ToString()
     {
         string s = "";
-        for (int i = 0; i < this.Height; ++i)
+        for (int i = 0; i < this.Height*this.Width; ++i)
         {
-            for (int j = 0; j < this.Width; ++j)
-            {
-                if (this.Pixels[i][j] == 0)
-                    s += " "; // white
-                else if (this.Pixels[i][j] == 255)
-                    s += "0"; // black
-                else
-                    s += "."; // gray
+            if (i % 28 == 0){
+                s += "\n";
             }
-            s += "\n";
+            if (this.Pixels[i] == 0)
+                s += " "; // white
+            else if (this.Pixels[i] == 1)
+                s += "0"; // black
+            else
+                s += "."; // gray
         }
         s += ("Label: ", this.Label.ToString());
         return s;
