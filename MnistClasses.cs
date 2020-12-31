@@ -115,13 +115,22 @@ public class MnistItem
         this.Height = height;
         this.Label = label;
 
-        this.Pixels = new byte[height][];
-        for (int i = 0; i < this.Pixels.Length; ++i)
-            this.Pixels[i] = new byte[width];
+        this.Pixels = new float[height*width];
 
+        int counter = 0;
+        // Console.Write("new byte[][] {\n");
         for (int i = 0; i < height; ++i)
+        {
+            // Console.Write("new byte[] {");
             for (int j = 0; j < width; ++j)
-                this.Pixels[i][j] = pixels[i][j];
+            {
+                // Console.Write(pixels[i][j]+", ");
+                this.Pixels[counter] = ((float)pixels[i][j]) / byte.MaxValue;
+                counter += 1;
+            }
+            // Console.Write("},\n");
+        }
+        // Console.Write("\n}");
     }
 
     public override string ToString()
