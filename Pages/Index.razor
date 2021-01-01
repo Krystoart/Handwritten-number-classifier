@@ -5,9 +5,12 @@
 
 <h1>WRITTEN NUMBER CLASSIFIER</h1>
 <div class="content" @onmousemove="@MouseIsOutOfSvg">
+    <canvas id="mainCanvas">
+
+    </canvas>
     <div class="canvas">
         <svg id="mainSvg" class="svg" width="@CanvasWidth" height="@CanvasHeight"
-            @onmousedown="@OnMouseDown" @onmousemove="@Mouse_Move" @onmouseup="@OnMouseUp">
+            @onmousedown="@OnMouseDown" @onmousemove="@OnMouseMove" @onmouseup="@OnMouseUp">
             @if(polylinesHistoric.Capacity > 0){
                 @foreach (var polyline in polylinesHistoric)
                 {
@@ -30,9 +33,6 @@
     </div>
     <div class="canvas">
         <div class="history">
-            <div class="guessed">
-                testing
-            </div>
             @if(guesses.Capacity > 0){
                 @foreach (var guess in guesses)
                 {
@@ -43,12 +43,12 @@
             }
         </div>
         <div style="display:flex;flex-direction:row;margin:1em">
-            <button class="button">
+            <button class="button" @onclick="@SaveSvg">
                 Save
             </button>
-            <button class="button">
+            @* <button class="button">
                 Edit
-            </button>
+            </button> *@
             <button class="button">
                 Delete
             </button>
@@ -97,7 +97,13 @@
        mouseIsOutOfSvg = await jsRuntime.InvokeAsync<bool>("MouseIsOutOfSvg", e);
     }
 
-    protected async void Mouse_Move(MouseEventArgs e)
+    protected async void SaveSvg(MouseEventArgs e)
+    {
+        var image = await jsRuntime.InvokeAsync<string>("SaveSvg");
+        Console.WriteLine(image);
+    }
+
+    protected async void OnMouseMove(MouseEventArgs e)
     {
         if(!pressed)return;
         await SetCoordinates(e);
@@ -118,6 +124,7 @@
     protected void ClearDrawing()
     {
         polylinesHistoric.Clear();
+        scaledCurrentDrawingAsString.Clear();
         polylineCurrent = null;
     }
 
@@ -150,15 +157,18 @@
 
     protected void GuessImage()
     {
-        var item = new List<RenderFragment>();
-        scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x)));
-        RenderFragment svg = CreateSvg(item);
-        guesses.Add(svg);
+        if(scaledCurrentDrawingAsString.Count() > 0)
+        {
+            var item = new List<RenderFragment>();
+            scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x)));
+            RenderFragment svg = CreateSvg(item);
+            guesses.Add(svg);
 
-        // Clear drawings
-        scaledCurrentDrawingAsString.Clear();
-        polylinesHistoric.Clear();
-        polylineCurrent = null;
+            // Clear drawings
+            scaledCurrentDrawingAsString.Clear();
+            polylinesHistoric.Clear();
+            polylineCurrent = null;
+        }
     }
 
     private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
