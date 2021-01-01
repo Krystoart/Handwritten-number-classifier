@@ -1,21 +1,32 @@
 # VPL course coursework - handwritten digit classifier
 
-## Development stack
+## Main development  stack
 
     - ASP.NET core 5.0
     - Blazor
+    - ML.NET
 
-## Setup
+## Description
 
-Prerequisites:
+    Authors: Kristofers Volkovs & Arina Solovjova
+    Project type: Final Course Project for Visual Programming Languages 2020
+    Project name: Written number classifier
+    E-mail: krystoart@gmail.com & arinacka2@gmail.com
 
-- .NET toolchain - [link](https://dotnet.microsoft.com/learn/aspnet/blazor-tutorial/intro)
+## Report
+### Needed dependencies (tested on ubuntu 20.04)
 
-To start project:
+- texlive-bibtex-extra/focal,focal,now 2019.202000218-1
+- texlive-extra-utils/focal,focal,now 2019.202000218-1
+- texlive-lang-all/focal,focal,now 2019.20200218-1
+- texlive-latex-extra/focal,focal,now 2019.202000218-1
+- texlive-xetex/focal,focal,now 2019.20200218-1
+- Pyhon2 `minted` package
+- Times New Roman fonts
 
+### Compilation
 
-    dotnet watch run
+```sh
+xelatex -synctex=1 -interaction=nonstopmode -file-line-error --shell-escape main.tex
+```
 
-## Route mappings
-
-By default project is exposed to localhost:5001
