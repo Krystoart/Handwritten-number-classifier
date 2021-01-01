@@ -9,7 +9,6 @@
 <h1>WRITTEN NUMBER CLASSIFIER</h1>
 <div class="content" @onmousemove="@MouseIsOutOfSvg">
     <canvas id="mainCanvas">
-
     </canvas>
     <a download="FILENAME.EXT" href="@hrefString">download</a>
     <div class="canvas">
@@ -100,7 +99,7 @@
     {
         pressed = false;
         polylinesHistoric.Add(CreateComponentStatic(PointString));
-        scaledCurrentDrawingAsString.Add(ScaleDown(PointString));
+        scaledCurrentDrawingAsString.Add(Scale(PointString, (Double)0.2));
     }
 
     protected async void MouseIsOutOfSvg(MouseEventArgs e)
@@ -224,7 +223,7 @@
         builder.CloseElement();
     };
 
-    private string ScaleDown(string pointsToRescale){
+    private string Scale(string pointsToRescale, double scale){
         string[] splittedPoints = pointsToRescale.Split(',');
         string newPoints = "";
         foreach(string point in splittedPoints){
@@ -232,13 +231,13 @@
                 string[] pair = point.Split(" ");
                 Double x = Double.Parse(pair[0]);
                 Double y = Double.Parse(pair[1]);
-                x *= 0.2;
-                y *= 0.2;
+                x *= scale;
+                y *= scale;
                 newPoints += "," + x.ToString() + " " + y.ToString();
             }
             else{
                 Double p = Double.Parse(point);
-                p *= 0.2;
+                p *= scale;
                 newPoints+= p.ToString();
             }
         }
