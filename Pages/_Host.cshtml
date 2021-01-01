@@ -72,5 +72,12 @@
         loader.src = 'data:image/svg+xml,' + encodeURIComponent( svgAsXML );
     }
     </script>
+    <script>
+        function getBase64()
+        {
+            let mainCanvas = document.getElementById('mainCanvas');
+            return mainCanvas.src;
+        }
+    </script>
 </body>
 </html>

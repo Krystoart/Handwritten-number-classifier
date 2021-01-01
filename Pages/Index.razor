@@ -2,12 +2,16 @@
 @inject IJSRuntime jsRuntime
 @using Microsoft.AspNetCore.Components.Web;
 @using System.Text.RegularExpressions;
+@using System.Drawing;
+@using System.Drawing.Imaging;
+@using System.IO;
 
 <h1>WRITTEN NUMBER CLASSIFIER</h1>
 <div class="content" @onmousemove="@MouseIsOutOfSvg">
     <canvas id="mainCanvas">
 
     </canvas>
+    <a download="FILENAME.EXT" href="@hrefString">download</a>
     <div class="canvas">
         <svg id="mainSvg" class="svg" width="@CanvasWidth" height="@CanvasHeight"
             @onmousedown="@OnMouseDown" @onmousemove="@OnMouseMove" @onmouseup="@OnMouseUp">
@@ -64,7 +68,9 @@
     private string Y;
     private string X;
     private bool mouseIsOutOfSvg;
+    private string hrefString;
 
+    private byte[] bytes;
     private List<string> scaledCurrentDrawingAsString = new List<string>();
     private List<RenderFragment> guesses = new List<RenderFragment>();
     private List<RenderFragment> polylinesHistoric = new List<RenderFragment>();
@@ -99,8 +105,41 @@
 
     protected async void SaveSvg(MouseEventArgs e)
     {
-        var image = await jsRuntime.InvokeAsync<string>("SaveSvg");
-        Console.WriteLine(image);
+        await jsRuntime.InvokeAsync<string>("SaveSvg");
+        hrefString = await jsRuntime.InvokeAsync<string>("getBase64");
+        if(!String.IsNullOrEmpty(hrefString)){
+            string toRemove = "data:image/png;base64,";
+            string testString = hrefString.Replace(toRemove, "");
+            bytes = Convert.FromBase64String(testString);
+            saveFile(bytes);
+
+            Bitmap bmp;
+            using (var ms = new MemoryStream(bytes))
+            {
+                bmp = new Bitmap(ms);
+            }
+            Console.WriteLine(bmp.Height);
+            Console.WriteLine(bmp.Width);
+
+            for(int x=0; x<bmp.Width; x++)
+            {
+                for(int y=0; y<bmp.Height; y++)
+                {
+                    Console.Write(bmp.GetPixel(x, y));
+                }
+                Console.Write("");
+            }
+        }
+    }
+
+    public void saveFile(byte[] imageBytes)
+    {
+        FileStream file = new FileStream("./number.png", FileMode.Create, FileAccess.Write);
+        StreamWriter m_WriterParameter = new StreamWriter(file);
+        MemoryStream ms = new MemoryStream(imageBytes);
+        ms.WriteTo(file);
+        file.Close();
+        ms.Close();
     }
 
     protected async void OnMouseMove(MouseEventArgs e)
