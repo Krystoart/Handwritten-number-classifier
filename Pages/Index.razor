@@ -37,11 +37,11 @@
     </div>
     <div class="canvas">
         <div class="history">
-            @if(guesses.Capacity > 0){
+            @if(guesses.Count > 0){
                 @foreach (var guess in guesses)
                 {
                     <label>
-                        <input type="radio" name="guess">
+                        <input type="radio" name="guess" @onclick="(e) => GetSelection(guess, e)">
                         <div class="guessed">
                             @guess
                         </div>
@@ -56,7 +56,7 @@
             @* <button class="button">
                 Edit
             </button> *@
-            <button class="button">
+            <button class="button" @onclick="@DeleteSelection">
                 Delete
             </button>
         </div>
@@ -72,6 +72,8 @@
     private string X;
     private bool mouseIsOutOfSvg;
     private string hrefString;
+
+    private int selectedItemIndex;
 
     private byte[] bytes;
     private List<string> scaledCurrentDrawingAsString = new List<string>();
@@ -104,6 +106,19 @@
     protected async void MouseIsOutOfSvg(MouseEventArgs e)
     {
        mouseIsOutOfSvg = await jsRuntime.InvokeAsync<bool>("MouseIsOutOfSvg", e);
+    }
+
+    protected void GetSelection(RenderFragment selectedItem,MouseEventArgs e)
+    {
+        selectedItemIndex = guesses.IndexOf(selectedItem);
+    }
+
+    protected void DeleteSelection(MouseEventArgs e)
+    {
+        if(selectedItemIndex > -1)
+        {
+            guesses.RemoveAt(selectedItemIndex);
+        }
     }
 
     protected async void SaveSvg(MouseEventArgs e)
