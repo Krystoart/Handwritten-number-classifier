@@ -1,0 +1,65 @@
+\documentclass[12pt,a4paper,oneside]{article}
+
+\usepackage{hyperref}
+\usepackage{polyglossia}
+\usepackage{subfiles}
+\usepackage{minted}
+\usepackage{adjustbox}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage[table]{xcolor}
+
+\usepackage{placeins}
+\usepackage{flafter}
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+\usepackage{lipsum}
+\usepackage{setspace}
+
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    total={170mm,257mm},
+    left=20mm,
+    top=20mm,
+    left=22mm,
+    right=20mm,
+}
+
+% Set line spacing
+\renewcommand{\baselinestretch}{1.5}
+
+% Disable spacing around list items
+\usepackage{enumitem}
+\setlist{nosep}
+
+% Set font
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+% Customizes sections
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
+
+\setdefaultlanguage{latvian}
+\SetLanguageKeys{latvian}{indentfirst=true}
+
+\sloppy
+\usepackage{fixlatvian}
+
+\begin{document}
+
+    % Titula lapa
+    \input{pages/titlepage.tex}
+
+    % Saturs
+    \tableofcontents
+
+    % Izmantotie rīki
+    % \input{sections/tools.tex}
+
+\end{document}
