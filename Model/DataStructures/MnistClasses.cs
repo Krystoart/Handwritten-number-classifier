@@ -5,12 +5,14 @@ public class MnistItem
     [ColumnName("Pixels")]
     [VectorType(784)]
     public float[] Pixels { get; } // 0 - 1 (white - black)
+    public float Label { get; }
     public int Width { get; } // 28
     public int Height { get; } // 28
     public MnistItem(int width, int height, byte[][] pixels)
     {
         this.Width = width;
         this.Height = height;
+        this.Label = -1;
 
         this.Pixels = new float[height*width];
 
