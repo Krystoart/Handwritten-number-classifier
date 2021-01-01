@@ -114,22 +114,23 @@
             bytes = Convert.FromBase64String(testString);
             saveFile(bytes);
 
-            Bitmap bmp;
+            @* Bitmap bmp;
             using (var ms = new MemoryStream(bytes))
             {
                 bmp = new Bitmap(ms);
             }
-            Console.WriteLine(bmp.Height);
-            Console.WriteLine(bmp.Width);
+
+            bmp.RotateFlip(RotateFlipType.Rotate90FlipX);
 
             for(int x=0; x<bmp.Width; x++)
             {
                 for(int y=0; y<bmp.Height; y++)
                 {
-                    Console.Write(bmp.GetPixel(x, y));
+                    Console.Write(bmp.GetPixel(x, y).A);
+                    Console.Write(' ');
                 }
-                Console.Write("");
-            }
+                Console.WriteLine();
+            } *@
         }
     }
 
