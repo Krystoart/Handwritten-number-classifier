@@ -16,6 +16,13 @@ This is a simple console app.
 
     3.1.404
 
+## Description
+
+    Authors: Kristofers Volkovs & Arina Solovjova
+    Project type: Final Course Project for Visual Programming Languages 2020
+    Project name: Written number classifier
+    E-mail: krystoart@gmail.com & arinacka2@gmail.com
+
 ## Setup
 
 Prerequisites:
