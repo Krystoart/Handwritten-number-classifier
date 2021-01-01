@@ -101,7 +101,7 @@
 
     protected async void MouseIsOutOfSvg(MouseEventArgs e)
     {
-       mouseIsOutOfSvg = await jsRuntime.InvokeAsync<bool>("MouseIsOutOfSvg", e);
+        mouseIsOutOfSvg = await jsRuntime.InvokeAsync<bool>("MouseIsOutOfSvg", e);
     }
 
     protected async void SaveSvg(MouseEventArgs e)
