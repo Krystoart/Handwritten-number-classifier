@@ -12,7 +12,7 @@ class MnistList : IEnumerable<MnistItem>
     public int Rows { get; }
     public int Columns { get; }
 
-    public MnistList(string imagePath, string labelPath, bool normalize = false)
+    public MnistList(string imagePath, string labelPath)
     {
         FileStream fsImages = new FileStream(imagePath, FileMode.Open); // Images
         FileStream fsLabels = new FileStream(labelPath, FileMode.Open); // Labels
@@ -41,16 +41,8 @@ class MnistList : IEnumerable<MnistItem>
         int imgCols = ReverseBytes(brImages.ReadInt32());
 
         this.Length = imgCount;
-        if (normalize) // TODO see if I even need this
-        {
-            this.Rows = 1;
-            this.Columns = imgRows * imgCols;
-        }
-        else
-        {
-            this.Rows = imgRows;
-            this.Columns = imgCols;
-        }
+        this.Rows = imgRows;
+        this.Columns = imgCols;
 
         this.images = new MnistItem[this.Length];
         byte[][] item = new byte[Rows][];
