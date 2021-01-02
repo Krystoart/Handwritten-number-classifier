@@ -5,8 +5,10 @@
 @using System.Drawing;
 @using System.Drawing.Imaging;
 @using System.IO;
-
-<h1>WRITTEN NUMBER CLASSIFIER</h1>
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<header>
+    <h1>Written number classifier</h1>
+</header>
 <div class="content" @onmousemove="@MouseIsOutOfSvg">
     <canvas id="mainCanvas">
     </canvas>
@@ -21,19 +23,22 @@
             }
             @polylineCurrent
         </svg>
-        <div style="display:flex;flex-direction:row;margin:1em">
+        <div class="svgButtons">
             <button @onclick="@ClearDrawing" class="button">
                 Clear
             </button>
             <button @onclick="@ClearLast" class="button">
-                Back
+                Undo
             </button>
             <button @onclick="@GuessImage" class="button">
                 Guess
             </button>
+            <button class="button" @onclick="@SaveSvg">
+                Save
+            </button>
         </div>
     </div>
-    <div class="canvas">
+    <div class="canvas" style="width:340px">
         <div class="history">
             @if(guesses.Count > 0){
                 @foreach (var guess in guesses)
@@ -48,12 +53,6 @@
             }
         </div>
         <div style="display:flex;flex-direction:row;margin:1em">
-            <button class="button" @onclick="@SaveSvg">
-                Save
-            </button>
-            @* <button class="button">
-                Edit
-            </button> *@
             <button class="button" @onclick="@DeleteSelection">
                 Delete
             </button>
@@ -128,6 +127,8 @@
             string testString = hrefString.Replace(toRemove, "");
             bytes = Convert.FromBase64String(testString);
             saveFile(bytes);
+        } else{
+            SaveSvg(e);
         }
     }
 
