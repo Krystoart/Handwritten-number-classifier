@@ -14,8 +14,9 @@ h1{
 
 .content {
     font-family: Montserrat;
-    display:flex;
-    flex-direction:row;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .canvas{
