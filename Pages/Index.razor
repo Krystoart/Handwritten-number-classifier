@@ -5,13 +5,14 @@
 @using System.Drawing;
 @using System.Drawing.Imaging;
 @using System.IO;
+@using MnistClassificator
 
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <header>
     <h1>Written number classifier</h1>
 </header>
 <div class="content" @onmousemove="@MouseIsOutOfSvg">
-    <canvas id="mainCanvas" width="@CanvasWidth" height="@CanvasHeight">
+    <canvas id="mainCanvas" width="28" height="28">
     </canvas>
     <div class="canvas">
         <svg id="mainSvg" class="svg" width="@CanvasWidth" height="@CanvasHeight"
@@ -79,6 +80,8 @@
     private List<RenderFragment> polylinesHistoric = new List<RenderFragment>();
     private RenderFragment polylineCurrent;
 
+    private Classificator mnistClassificator = new Classificator();
+
     protected override void OnInitialized()
     {
         PointString = "";
@@ -103,7 +106,7 @@
 
     protected async void MouseIsOutOfSvg(MouseEventArgs e)
     {
-       mouseIsOutOfSvg = await jsRuntime.InvokeAsync<bool>("MouseIsOutOfSvg", e);
+        mouseIsOutOfSvg = await jsRuntime.InvokeAsync<bool>("MouseIsOutOfSvg", e);
     }
 
     protected void GetSelection(RenderFragment selectedItem,MouseEventArgs e)
@@ -170,33 +173,32 @@
 
     protected void ClearLast(MouseEventArgs e)
     {
-        if(polylinesHistoric.Count() > 0){
+        if (polylinesHistoric.Count > 0)
             polylinesHistoric.RemoveAt(polylinesHistoric.Count() - 1);
-        }
         polylineCurrent = null;
     }
 
-     private RenderFragment CreateComponent() => builder =>
+    private RenderFragment CreateComponent() => builder =>
     {
         builder.OpenElement(1, "polyline");
         builder.AddAttribute(2, "points", PointString);
         builder.AddAttribute(3, "fill", "none");
-        builder.AddAttribute(4, "stroke-width", "8");
+        builder.AddAttribute(4, "stroke-width", "30");
         builder.AddAttribute(5, "stroke", "black");
         builder.CloseElement();
     };
 
-     private RenderFragment CreateComponentStatic(string points) => builder =>
+    private RenderFragment CreateComponentStatic(string points) => builder =>
     {
         builder.OpenElement(1, "polyline");
         builder.AddAttribute(2, "points", points);
         builder.AddAttribute(3, "fill", "none");
-        builder.AddAttribute(4, "stroke-width", "8");
+        builder.AddAttribute(4, "stroke-width", "30");
         builder.AddAttribute(5, "stroke", "black");
         builder.CloseElement();
     };
 
-    protected void GuessImage()
+    protected async void GuessImage()
     {
         if(scaledCurrentDrawingAsString.Count() > 0)
         {
@@ -205,14 +207,62 @@
             RenderFragment svg = CreateSvg(item);
             guesses.Insert(0, svg);
 
+            // TODO it's needed to click Guess twice to get the result so this needs to be fixed
+            await jsRuntime.InvokeAsync<string>("SaveSvg");
+            hrefString = await jsRuntime.InvokeAsync<string>("getBase64");
+            if(!String.IsNullOrEmpty(hrefString)){
+                string toRemove = "data:image/png;base64,";
+                string testString = hrefString.Replace(toRemove, "");
+                bytes = Convert.FromBase64String(testString);
+
+                Bitmap bmp;
+                using (var ms = new MemoryStream(bytes))
+                {
+                    bmp = new Bitmap(ms);
+                }
+
+                bmp.RotateFlip(RotateFlipType.Rotate90FlipX);
+
+                byte[][] image = new byte[bmp.Width][];
+                for (int i=0; i<bmp.Height; ++i)
+                    image[i] = new byte[bmp.Height];
+
+                for(int x=0; x<bmp.Width; x++)
+                {
+                    for(int y=0; y<bmp.Height; y++) {
+                        image[x][y] = bmp.GetPixel(x, y).A;
+                    }
+                }
+
+                var test = mnistClassificator.Analyze(image);
+
+                for(int b=0; b<10; b++)
+                {
+                    Console.Write($"{b} {test[b]:0.####}");
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
+
+                for(int x=0; x<bmp.Width; x++)
+                {
+                    for(int y=0; y<bmp.Height; y++)
+                    {
+                        Console.Write(image[x][y]);
+                        Console.Write(' ');
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
+            }
+
             // Clear drawings
-            scaledCurrentDrawingAsString.Clear();
+            @* scaledCurrentDrawingAsString.Clear();
             polylinesHistoric.Clear();
-            polylineCurrent = null;
+            polylineCurrent = null; *@
         }
     }
 
-     private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
+    private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
     {
         int index = 0;
         builder.OpenElement(index++, "svg");
