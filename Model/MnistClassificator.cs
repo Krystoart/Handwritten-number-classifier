@@ -37,7 +37,7 @@ namespace MnistClassificator
             if (image.Length != 784)
                 throw new Exception("Image length is not 784.");
 
-            MnistItem imageObject = new MnistItem(width: 28, height: 28, pixels: image);
+            MnistItem imageObject = new MnistItem(length: image.Length, pixels: image);
 
             MLContext mlContext = new MLContext();
             var predEngine = mlContext.Model.CreatePredictionEngine<MnistItem, MnistOutPutData>(this.trainedModel);
