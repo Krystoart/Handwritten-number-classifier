@@ -200,65 +200,69 @@
 
     protected async void GuessImage()
     {
-        if(scaledCurrentDrawingAsString.Count() > 0)
+        await jsRuntime.InvokeAsync<string>("SaveSvg");
+        hrefString = await jsRuntime.InvokeAsync<string>("getBase64");
+        if(scaledCurrentDrawingAsString.Count() > 0 && !String.IsNullOrEmpty(hrefString))
         {
             var item = new List<RenderFragment>();
             scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x)));
             RenderFragment svg = CreateSvg(item);
             guesses.Insert(0, svg);
 
-            // TODO it's needed to click Guess twice to get the result so this needs to be fixed
-            await jsRuntime.InvokeAsync<string>("SaveSvg");
-            hrefString = await jsRuntime.InvokeAsync<string>("getBase64");
-            if(!String.IsNullOrEmpty(hrefString)){
-                string toRemove = "data:image/png;base64,";
-                string testString = hrefString.Replace(toRemove, "");
-                bytes = Convert.FromBase64String(testString);
+            string toRemove = "data:image/png;base64,";
+            string testString = hrefString.Replace(toRemove, "");
+            bytes = Convert.FromBase64String(testString);
 
-                Bitmap bmp;
-                using (var ms = new MemoryStream(bytes))
-                {
-                    bmp = new Bitmap(ms);
-                }
-
-                bmp.RotateFlip(RotateFlipType.Rotate90FlipX);
-
-                byte[][] image = new byte[bmp.Width][];
-                for (int i=0; i<bmp.Height; ++i)
-                    image[i] = new byte[bmp.Height];
-
-                for(int x=0; x<bmp.Width; x++)
-                {
-                    for(int y=0; y<bmp.Height; y++) {
-                        image[x][y] = bmp.GetPixel(x, y).A;
-                    }
-                }
-
-                var test = mnistClassificator.Analyze(image);
-
-                for(int b=0; b<10; b++)
-                {
-                    Console.Write($"{b} {test[b]:0.####}");
-                    Console.WriteLine();
-                }
-                Console.WriteLine();
-
-                for(int x=0; x<bmp.Width; x++)
-                {
-                    for(int y=0; y<bmp.Height; y++)
-                    {
-                        Console.Write(image[x][y]);
-                        Console.Write(' ');
-                    }
-                    Console.WriteLine();
-                }
-                Console.WriteLine();
+            Bitmap bmp;
+            using (var ms = new MemoryStream(bytes))
+            {
+                bmp = new Bitmap(ms);
             }
 
+            bmp.RotateFlip(RotateFlipType.Rotate90FlipX);
+
+            byte[] image = new byte[ bmp.Width * bmp.Height];
+
+            // Some preprocessing is done here
+            // It reduces the dimensions from 2d to 1d
+            int counter = 0;
+            for(int x=0; x<bmp.Width; x++)
+            {
+                for(int y=0; y<bmp.Height; y++)
+                {
+                    image[counter] = bmp.GetPixel(x, y).A;
+                    counter += 1;
+                }
+            }
+
+            // Makes a call to the model and returns an array of values float[]
+            var test = mnistClassificator.Analyze(image);
+
+            // For testing purposes prints the values in the console
+            for(int b=0; b<10; b++)
+            {
+                Console.Write($"{b} {test[b]:0.####}");
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            // For testing also prints the number array
+            for(int x=0; x<bmp.Width * bmp.Height; x++)
+            {
+                Console.Write(image[x]);
+                Console.Write(' ');
+                if (x % 28 == 0)
+                    Console.WriteLine();
+            }
+            Console.WriteLine();
+
             // Clear drawings
-            @* scaledCurrentDrawingAsString.Clear();
+            scaledCurrentDrawingAsString.Clear();
             polylinesHistoric.Clear();
-            polylineCurrent = null; *@
+            polylineCurrent = null;
+        }
+        else
+        {
+            GuessImage();
         }
     }
 
