@@ -60,16 +60,17 @@ h1{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: auto;
 }
 
 .guessed{
     display: flex;
+    flex-direction: row;
     background-color:#CFDCE9;
-    width: 15em;
-    height: 5em;
+    width: 20em;
+    height: 10em;
     margin: 1em;
     margin-bottom: 0.2em;
-
 
     border: white;
     border-width: 0.2em;
@@ -94,4 +95,10 @@ input{
 
 input:checked~.guessed {
     background-color: #6b75ff;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
