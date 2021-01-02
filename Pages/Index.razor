@@ -43,12 +43,18 @@
     <div class="canvas" style="width:340px">
         <div class="history">
             @if(guesses.Count > 0){
-                @foreach (var guess in guesses)
+                @for(int i=0; i<guesses.Count(); i++)
                 {
                     <label>
-                        <input type="radio" name="guess" @onclick="(e) => GetSelection(guess, e)">
+                        <input type="radio" name="guess" @onclick="(e) => GetSelection(i-1, e)">
                         <div class="guessed">
-                            @guess
+                            @guesses[i]
+                        <div class="results">
+                            @for(int j=0; j<guessValues[i].Count(); j++)
+                            {
+                                <div>@guessValues[i][j]</div>
+                            }
+                        </div>
                         </div>
                     </label>
                 }
@@ -77,6 +83,7 @@
     private byte[] bytes;
     private List<string> scaledCurrentDrawingAsString = new List<string>();
     private List<RenderFragment> guesses = new List<RenderFragment>();
+    private List<List<string>> guessValues = new List<List<string>>();
     private List<RenderFragment> polylinesHistoric = new List<RenderFragment>();
     private RenderFragment polylineCurrent;
 
@@ -109,9 +116,9 @@
         mouseIsOutOfSvg = await jsRuntime.InvokeAsync<bool>("MouseIsOutOfSvg", e);
     }
 
-    protected void GetSelection(RenderFragment selectedItem,MouseEventArgs e)
+    protected void GetSelection(int itemIndex,MouseEventArgs e)
     {
-        selectedItemIndex = guesses.IndexOf(selectedItem);
+        selectedItemIndex = itemIndex;
     }
 
     protected void DeleteSelection(MouseEventArgs e)
@@ -119,6 +126,8 @@
         if(selectedItemIndex > -1)
         {
             guesses.RemoveAt(selectedItemIndex);
+            guessValues.RemoveAt(selectedItemIndex);
+
         }
     }
 
@@ -184,7 +193,7 @@
         builder.OpenElement(1, "polyline");
         builder.AddAttribute(2, "points", PointString);
         builder.AddAttribute(3, "fill", "none");
-        builder.AddAttribute(4, "stroke-width", "30");
+        builder.AddAttribute(4, "stroke-width", "26");
         builder.AddAttribute(5, "stroke", "black");
         builder.CloseElement();
     };
@@ -194,7 +203,7 @@
         builder.OpenElement(1, "polyline");
         builder.AddAttribute(2, "points", points);
         builder.AddAttribute(3, "fill", "none");
-        builder.AddAttribute(4, "stroke-width", "30");
+        builder.AddAttribute(4, "stroke-width", "26");
         builder.AddAttribute(5, "stroke", "black");
         builder.CloseElement();
     };
@@ -239,13 +248,17 @@
             // Makes a call to the model and returns an array of values float[]
             var test = mnistClassificator.Analyze(image);
 
+            List<string> results = new List<string>();
             // For testing purposes prints the values in the console
             for(int b=0; b<10; b++)
             {
                 Console.Write($"{b} {test[b]:0.####}");
                 Console.WriteLine();
+                results.Add($"{b}: {test[b] * 100:0.##}%");
             }
+            guessValues.Insert(0, results);
             Console.WriteLine();
+
             // For testing also prints the number array
             for(int x=0; x<bmp.Width * bmp.Height; x++)
             {
