@@ -32,10 +32,10 @@ namespace MnistClassificator
             ----------------
             image: 28x28 2d array, each value is between 0 and 255 (white - black)
         */
-        public float[] Analyze(byte[][] image)
+        public float[] Analyze(byte[] image)
         {
-            if (image.Length != 28)
-                throw new Exception("Image length is not 28.");
+            if (image.Length != 784)
+                throw new Exception("Image length is not 784.");
 
             MnistItem imageObject = new MnistItem(width: 28, height: 28, pixels: image);
 
