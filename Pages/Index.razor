@@ -272,7 +272,8 @@
         builder.OpenElement(index++, "svg");
         builder.AddAttribute(index++, "viewBox", "0 0 100 100");
         builder.AddAttribute(index++, "preserveAspectRatio", "xMin meet");
-        foreach (RenderFragment polyline in polylines){
+        foreach (RenderFragment polyline in polylines)
+        {
             builder.AddContent(index++, polyline);
         }
         builder.CloseElement();
@@ -281,8 +282,10 @@
     private string Scale(string pointsToRescale, double scale){
         string[] splittedPoints = pointsToRescale.Split(',');
         string newPoints = "";
-        foreach(string point in splittedPoints){
-            if(Regex.Match(point, @"\d+\s\d+").Success){
+        foreach(string point in splittedPoints)
+        {
+            if(Regex.Match(point, @"\d+\s\d+").Success)
+            {
                 string[] pair = point.Split(" ");
                 Double x = Double.Parse(pair[0]);
                 Double y = Double.Parse(pair[1]);
@@ -290,7 +293,8 @@
                 y *= scale;
                 newPoints += "," + x.ToString() + " " + y.ToString();
             }
-            else{
+            else
+            {
                 Double p = Double.Parse(point);
                 p *= scale;
                 newPoints+= p.ToString();
