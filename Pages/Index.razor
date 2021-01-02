@@ -10,7 +10,6 @@
 <div class="content" @onmousemove="@MouseIsOutOfSvg">
     <canvas id="mainCanvas">
     </canvas>
-    <a download="FILENAME.EXT" href="@hrefString">download</a>
     <div class="canvas">
         <svg id="mainSvg" class="svg" width="@CanvasWidth" height="@CanvasHeight"
             @onmousedown="@OnMouseDown" @onmousemove="@OnMouseMove" @onmouseup="@OnMouseUp">
@@ -202,7 +201,7 @@
             var item = new List<RenderFragment>();
             scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x)));
             RenderFragment svg = CreateSvg(item);
-            guesses.Add(svg);
+            guesses.Insert(0, svg);
 
             // Clear drawings
             scaledCurrentDrawingAsString.Clear();
