@@ -159,6 +159,7 @@
 
     protected async Task SetCoordinates(MouseEventArgs e)
     {
+
         var Coordinates = await jsRuntime.InvokeAsync<string>("accessDOMElement", e);
         X = Coordinates.Split(" ")[0];
         Y = Coordinates.Split(" ")[1];
@@ -259,6 +260,7 @@
             scaledCurrentDrawingAsString.Clear();
             polylinesHistoric.Clear();
             polylineCurrent = null;
+            await jsRuntime.InvokeAsync<string>("ClearMainCanvas");
         }
         else
         {
