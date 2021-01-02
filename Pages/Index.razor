@@ -5,12 +5,13 @@
 @using System.Drawing;
 @using System.Drawing.Imaging;
 @using System.IO;
+
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <header>
     <h1>Written number classifier</h1>
 </header>
 <div class="content" @onmousemove="@MouseIsOutOfSvg">
-    <canvas id="mainCanvas">
+    <canvas id="mainCanvas" width="@CanvasWidth" height="@CanvasHeight">
     </canvas>
     <div class="canvas">
         <svg id="mainSvg" class="svg" width="@CanvasWidth" height="@CanvasHeight"
