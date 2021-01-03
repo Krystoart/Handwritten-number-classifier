@@ -4,19 +4,30 @@
     modeļa apmācīšanas, gan modeļa implementācijas.
 
     Trenēšanas procesā bija nepieciešams \texttt{MNIST} datus sakārtotā formā uzglabāt atmiņā, tāpēc
-    tika izveidotas 2 klases: \texttt{MnistList} un \texttt{MnistItem}. \texttt{MnistItem} klase tieši
-    uzglabā pikseļu vērtības un attiecīgo bildes ciparu. \texttt{MnistList} ir klases mainīgais, kurā
-    tiek uzglabāts masīvs ar \texttt{MnistItem} klasēm. \texttt{MnistItem} ir klase, kurā tiek uzglabāta
-    viena bilde un šīs bildes cipars. Šai klasei ir 2 galvenie mainīgie: \texttt{Pixels}, kas ir masīvs
-    ar float vērtībām, un \texttt{Label}, kas ir float vērtība. Lai ielasītu datus, ir izveidota parsēšanas
-    funkcija, kas ir \texttt{MnistList} konstruktors, un to ir iespējams apskatīt sekojoši:
+    tika izveidotas 2 klases:
+
+    \begin{itemize}
+        \item \texttt{MnistList}
+        \begin{itemize}
+            \item \texttt{MnistItem[] Images}
+        \end{itemize}
+        \item \texttt{MnistItem}
+        \begin{itemize}
+            \item \texttt{float[] Pixels}
+            \item \texttt{float Label}
+        \end{itemize}
+    \end{itemize}
+
+    Sarakstā ir aprakstītas klases un šo klašu galvenie klašu mainīgie. Pēc šo klašu izveidošanas
+    bija nepieciešams izveidot parsēšanu. Šī parsēšana notiek \texttt{MnistList} konstruktorā,
+    un izplementāciju ir iespējams apskatīt sekojoši:
 
     \input{pages/code/mnistList.tex}
 
     Par piemēru šīm klasēm tika ņemts \texttt{GitHub} piemērs \cite{paxbunPaxbunCntkMnistPractice2019}.
     \texttt{MNIST} dati ir binārie dati un to pikseļu vērtības ir intervālā no 0 līdz 255,
     bet, ja modelim tiks doti normalizēti dati, kas ir vērtībās no 0 līdz 1, tad tas
-    uztrenēsies labāk. Tāpēc \texttt{MnistItem} klases konstruktorā šie dati tiek
+    apmācīts labāk. Tāpēc \texttt{MnistItem} klases konstruktorā šie dati tiek
     normalizēti.
 
     \input{pages/code/mnistItem.tex}
@@ -30,7 +41,7 @@
 
     Rezultātā tika izveidots modelis, kuru bija nepieciešams implementēt tīmekļa aplikācijā.
     Tika izveidota klase \texttt{MnistClassificator} ar metodi, kura saņem masīvu ar pikseļu vērtībām un
-     atgriež masīvu ar float vērtībām, kur katrs elements
+    atgriež masīvu ar float vērtībām, kur katrs elements
     atbilst kādai no ciparu klasēm.
 
     \input{pages/code/mlImplement.tex}
