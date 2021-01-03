@@ -25,14 +25,21 @@
         \label{ml:train}
     \end{figure}
 
-    Sākumā tika iegūti \texttt{MNIST} dati no "THE MNIST DATABASE" \cite{MNISTHandwrittenDigit}. Tie ir
-    4 bināri faili un tos diagrammā var redzēt "Training data" un "Testing data" kvadrātos. Pēc datu iegūšanas
-    tika izveidots datu parsēšanas funkcija, kas ielasa visus datus atmiņā un sadala tos pa klasēm \texttt{MnistList} un \texttt{MnistItem}. Izmantojot \texttt{ML.NET}, tiek nodefinēta
-    konfigurācija prieks \texttt{ML.NET} "pipeline". Konfigurācijā ietilpst mainīgo sasaistīšana un
-    modeļa veida definēšana. Pēc konfigurācijas definēšanas un datu ielasīšanas tiek trenēts modelis
-    izmantojot \texttt{.Fit()} metodi. Ir nepieciešams pārbaudīt cik labi šis
-    modelis ir uztrenēts, tāpēc tiek veiktas transformācijas uz datiem, kuri iepriekš ir izmantoti modeļā trenēšanai. Tas tiek veikts, izmantojot \texttt{.Transform()} metodi. Pēc šis pārbaudes ar \texttt{.Evaluate()} metodi modelis tiek izvērtēts. Pēdējais solis ir to saglabāt. Tas tiek izdarīts
-    izmantojot \texttt{.Save()} metodi.
+    Projekta sākumā tika iegūti \texttt{MNIST} dati no "THE MNIST DATABASE". Tie ir 4 bināri faili
+    un tos diagrammā var redzēt "Training data" un "Testing data" kvadrātos. Pēc datu iegūšanas tika
+    izveidots datu parsēšanas funkcija, kas ielasa visus datus atmiņā un sadala tos pa klasēm
+    \texttt{MnistList} un \texttt{MnistItem}. Šīm klasēm ir arī vizuāla reprezentācija diagrammā.
+    Kad dati ir ielādēti atmiņā, tad tiek izveidots \texttt{ML.NET} "pipeline", kas ir kā konfigurācija
+    priekš modeļa, kas tiks apmācīts. Visa konfigurācija ir redzama "Model configurations" kvadrātā. Šajā konfigurācijā
+    tiek izveidots "pipeline", kas sasaista \texttt{Mnist} klašu mainīgos ar modeļa mainīgajiem.
+    Tiek arī nodefinēta modeļa veids, kādi input dati būs un kādi output dati. Pēc datu ielasīšanas
+    un modeļa nokofigurēšanas šis modelis tiek apmācīts. Lai šo modeli apmācītu, tiek izmantotas
+    \texttt{ML.NET} iebūvētā metode: \texttt{.Fit()}. Šo funkcijju ir iespējams apskatīt "Model training"
+    kvadrātā. Kad modelis ir apmācīts ir nepieciešams novērtēt cik labi šis modelis ir apmācīts, tapēc
+    ir nepieciešams veikt transformācijas uz testa datiem tas ir redzams "Transform test data" kvadrātā,
+    un tad, izmantojot šos pārveidotos testa datus, un \texttt{ML.NET} iebūvēto funkciju \texttt{.Evaluate()}
+    tiek iegūtas modeļa rezultējošās metrikas. Pēdējais solis ir šo modeli saglabāt, kas arī tiek darīts
+    izmantojot \texttt{ML.NET} iebūvēto funkciju \texttt{.Save()}.
 
     Rezultātā tika iegūts modelis, kuru metriku rezultāti ir redzami \ref{ml:metrics}~attēlā.
 
