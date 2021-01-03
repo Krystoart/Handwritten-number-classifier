@@ -39,3 +39,9 @@
         \caption{ML modeļa metriku rezultāti}
         \label{ml:metrics}
     \end{figure}
+
+    Kad modelis bija izveidots, tad to bija nepieciešams implementēt tīmekļa aplikācijā. Tika izveidota
+    \mintinline{csharp}{MnistClassificator} klase, kurā tika izveidota metode
+    \mintinline{csharp}{public float[] Analyze(byte[] image)}, kurai ir iespējams padot bināru virkni,
+    kas attiecīgi tiek padota izveidotam modelim, kas atgriež virkni ar float vērtībām. Šīs vērtības
+    reprezentē procentuālās vērtības ciparu klasēm.
