@@ -240,7 +240,11 @@
             {
                 for(int y=0; y<bmp.Height; y++)
                 {
-                    image[counter] = bmp.GetPixel(x, y).A;
+                    byte temp = bmp.GetPixel(x, y).A;
+                    if(temp > 0)
+                        image[counter] = 255;
+                    else
+                        image[counter] = 0;
                     counter += 1;
                 }
             }
