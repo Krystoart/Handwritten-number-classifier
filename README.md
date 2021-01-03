@@ -11,6 +11,7 @@ This is a simple console app.
 ## This branch development stack
 
     - ASP.NET core 5.0
+    - ML.NET
 
 ## Description
 
