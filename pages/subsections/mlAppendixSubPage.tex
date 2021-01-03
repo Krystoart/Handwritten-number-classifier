@@ -28,3 +28,13 @@
     nepieciešams pārveidot, lai tas strādātu uz īsto \texttt{MNIST} datu kopu. \cite{MNISTHandwrittenDigit}
 
     \input{pages/code/mlTraining.tex}
+
+    Rezultātā tika izveidots modelis, kuru bija nepieciešams implementēt tīmekļa aplikācijā.
+    Tīmekļa aplikācijā tika izveidota klase \texttt{MnistClassificator}, kur tika izveidota metode, kurai
+    padodot masīvu ar pikseļu vērtībām tiek atgriests masīvs ar float vērtībām, kur katra no vērtībām
+    atbilst kādai no ciparu klasēm.
+
+    \input{pages/code/mlImplement.tex}
+
+    Lai ielasītu modeli atmiņā un to varētu izmantot tiek izmantota \texttt{ML.NET} funkcija:
+    \mintinline{csharp}{this.trainedModel = mlContext.Model.Load(ModelPath, out var modelInputSchema);}
