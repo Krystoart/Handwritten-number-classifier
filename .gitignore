@@ -10,3 +10,8 @@
 *.pygstyle
 *.pygtex
 *.pdf
+*.blg
+*.bbl
+*.bak*
+*.bcf
+*.run.xml
