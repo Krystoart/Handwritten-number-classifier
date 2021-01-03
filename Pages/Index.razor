@@ -107,7 +107,7 @@
     protected void OnMouseUp(MouseEventArgs e)
     {
         pressed = false;
-        polylinesHistoric.Add(CreateComponentStatic(PointString));
+        polylinesHistoric.Add(CreateComponentStatic(PointString, "26"));
         scaledCurrentDrawingAsString.Add(Scale(PointString, (Double)0.2));
     }
 
@@ -198,12 +198,12 @@
         builder.CloseElement();
     };
 
-    private RenderFragment CreateComponentStatic(string points) => builder =>
+    private RenderFragment CreateComponentStatic(string points, string strokeWidth) => builder =>
     {
         builder.OpenElement(1, "polyline");
         builder.AddAttribute(2, "points", points);
         builder.AddAttribute(3, "fill", "none");
-        builder.AddAttribute(4, "stroke-width", "26");
+        builder.AddAttribute(4, "stroke-width", strokeWidth);
         builder.AddAttribute(5, "stroke", "black");
         builder.CloseElement();
     };
@@ -215,7 +215,7 @@
         if(scaledCurrentDrawingAsString.Count() > 0 && !String.IsNullOrEmpty(hrefString))
         {
             var item = new List<RenderFragment>();
-            scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x)));
+            scaledCurrentDrawingAsString.ForEach(x => item.Add(CreateComponentStatic(x, "9")));
             RenderFragment svg = CreateSvg(item);
             guesses.Insert(0, svg);
 
