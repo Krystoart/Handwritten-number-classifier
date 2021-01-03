@@ -1,0 +1,114 @@
+\subsection{Tīmekļa aplikācija}
+
+\par Lai dinamiski varētu izveidot jaunus \texttt{polyline} elementus, tika izmantota \texttt{RenderFragment} \cite{render_fragment}  klase. Ar to var izveidot veidni priekš noteiktas komponentes. Koda daļā zem šī teksta var redzēt, kā šī klase tiek izmantota \texttt{svg} elementa izveidei, padodot tam jau esošu \texttt{polyline} sarakstu.
+
+{
+\setstretch{1.0}
+\begin{minted}[]{csharp}
+    private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
+    {
+        int index = 0;
+        builder.OpenElement(index++, "svg");
+        builder.AddAttribute(index++, "viewBox", "0 0 100 100");
+        builder.AddAttribute(index++, "preserveAspectRatio", "xMin meet");
+        foreach (RenderFragment polyline in polylines)
+        {
+            builder.AddContent(index++, polyline);
+        }
+        builder.CloseElement();
+    };
+\end{minted}
+}
+
+\par Šī koda daļa atbild par \texttt{svg} pārveidi uz \texttt{Base64 string}, lai to varētu pārveidot uz \texttt{byte[]} \cite{from_base_64_to_string} formātu, kuru turpmāk izmanto faila saglabāšanai lietotāja datorā(kā \texttt{png}) un pārveidoto bitmap versiju mašīnmācīšanās algoritmam.
+{
+\setstretch{1.0}
+\begin{minted}[]{csharp}
+    protected async void SaveSvg(MouseEventArgs e)
+    {
+        await jsRuntime.InvokeAsync<string>("SaveSvg");
+        hrefString = await jsRuntime.InvokeAsync<string>("getBase64");
+        if(!String.IsNullOrEmpty(hrefString)){
+            string toRemove = "data:image/png;base64,";
+            string testString = hrefString.Replace(toRemove, "");
+            bytes = Convert.FromBase64String(testString);
+            saveFile(bytes);
+        } else{
+            SaveSvg(e);
+        }
+    }
+\end{minted}
+}
+
+\par Lai uzzīmēto ciparu varētu attēlot zīmējumu vēstures skatā, ir nepieciešams to samazināt. Tādēļ tika izveidota šī funkcija \texttt{Scale}, kura samazina \texttt{polyline} elementa punktu vērtību par iedoto lielumu \textit{scale}.
+{
+\setstretch{1.0}
+\begin{minted}[]{csharp}
+    private string Scale(string pointsToRescale, double scale){
+        string[] splittedPoints = pointsToRescale.Split(',');
+        string newPoints = "";
+        foreach(string point in splittedPoints)
+        {
+            if(Regex.Match(point, @"\d+\s\d+").Success)
+            {
+                string[] pair = point.Split(" ");
+                Double x = Double.Parse(pair[0]);
+                Double y = Double.Parse(pair[1]);
+                x *= scale;
+                y *= scale;
+                newPoints += "," + x.ToString() + " " + y.ToString();
+            }
+            else
+            {
+                Double p = Double.Parse(point);
+                p *= scale;
+                newPoints+= p.ToString();
+            }
+        }
+        return newPoints;
+    }
+\end{minted}
+}
+
+\par Lai pārveidotu \texttt{svg} failu uz \texttt{png} failu, tika izmantota \texttt{javascript} valoda un funkcija, kas tika pieminēta vienā no \texttt{stackoverflow} jautājuma atbildēm \cite{stackoverflow_answer}.
+
+{
+\setstretch{1.0}
+\begin{minted}[]{javascript}
+    function SaveSvg() {
+        var mySVG = document.getElementById('mainSvg'),      // Inline SVG element
+        tgtImage = document.getElementById('mainCanvas'),      // Where to draw the result
+        can      = document.createElement('canvas'), // Not shown on page
+        ctx      = can.getContext('2d'),
+        loader   = new Image;                        // Not shown on page
+        loader.width  = can.width  = tgtImage.width;
+        loader.height = can.height = tgtImage.height;
+        let waitingForResult = true;
+        let result = "";
+        loader.onload = function(){
+            ctx.drawImage( loader, 0, 0, loader.width, loader.height );
+            tgtImage.src = can.toDataURL();
+            result = tgtImage.src;
+            waitingForResult = false;
+        };
+        var svgAsXML = (new XMLSerializer).serializeToString( mySVG );
+        loader.src = 'data:image/svg+xml,' + encodeURIComponent( svgAsXML );
+    }
+\end{minted}
+}
+
+\par Zīmējot ciparu uz lapas \texttt{svg} elementa, ir paredzēts, ka, ja lietotājs ar peles kursoru izies no \texttt{svg} elementa zonas, zīmējums aptrūks. Tas tika pielietots, lai zīmejums neturpinātos neparedzētos gadījumos (lietotājs nav nospiedis peles taustiņu, lai turpinātu zīmējumu, bet šķērsojot elementu ar peles kursoru, zīmējums turpinās). Tāpēc nepieciešams izveidot funkciju, kas pārbauda, vai peles kursors ir ārpus nepieciešamā elementa. Tam tika izmantota \texttt{javascript} valoda, ar kuru varēja iegūt \texttt{svg} elementa atrašanāš vietu lapā un kursora koordinātas.
+{
+\setstretch{1.0}
+\begin{minted}[]{javascript}
+    function MouseIsOutOfSvg(e) {
+        x=e.clientX;
+        y=e.clientY;
+        let svg = document.getElementById('mainSvg');
+        return Number(x) < Number(svg.getBoundingClientRect().left)
+        || Number(x) > Number(svg.getBoundingClientRect().right)
+         || Number(y) < Number(svg.getBoundingClientRect().top)
+         || Number(y) > Number(svg.getBoundingClientRect().bottom);
+    }
+\end{minted}
+}
