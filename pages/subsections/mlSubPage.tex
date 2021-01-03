@@ -22,14 +22,14 @@
     Sākumā tika iegūti \texttt{MNIST} dati no "THE MNIST DATABASE" [insert reference]. Tie ir 4 bināri
     faili un tos diagrammā var redzēt "Training data" un "Testing data" kvadrātos. Pēc datu iegūšanas
     tika izveidots datu parser funkcija, kas ielasa visus datus atmiņā un sadala to pa klasēm un šīs
-    klases ir "MnistList" un "MnistItem". Izmantojot \texttt{ML.NET} tiek nodefinēta konfigurācija
-    prieks \texttt{ML.NET} "pipeline". Konfigurācijā ietilpst mainīgo sasaistīšana un modeļa veida
-    definēšana. Pēc konfigurācijas nodefinēšanas un datu ielasīšanas tiek trennēts modelis izmantojot
-    \mintinline{csharp}{.Fit()} metodi. Pēc modeļa trennēšanas ir nepieciešams pārbaudīt cik labi šis
+    klases ir \texttt{MnistList} un \texttt{MnistItem}. Izmantojot \texttt{ML.NET} tiek nodefinēta
+    konfigurācija prieks \texttt{ML.NET} "pipeline". Konfigurācijā ietilpst mainīgo sasaistīšana un
+    modeļa veida definēšana. Pēc konfigurācijas nodefinēšanas un datu ielasīšanas tiek trennēts modelis
+    izmantojot \texttt{.Fit()} metodi. Pēc modeļa trennēšanas ir nepieciešams pārbaudīt cik labi šis
     modelis ir uztrennēts, tapēc tiek veiktas transformācijas uz datiem, kuri tika izmantoti modeļa
-    trennēšanā, izmantojot \mintinline{csharp}{.Transform()} metodi, un izmanotjot šos datus tiek
-    veikta modeļa izvērtēšana izmantojot \mintinline{csharp}{.Evaluate()} metodi. Pēdejais solis ir
-    to saglabāt. Tas tiek izdarīts izmantojot \mintinline{csharp}{.Save()} metodi.
+    trennēšanā, izmantojot \texttt{.Transform()} metodi, un izmanotjot šos datus tiek veikta modeļa
+    izvērtēšana izmantojot \texttt{.Evaluate()} metodi. Pēdejais solis ir to saglabāt. Tas tiek izdarīts
+    izmantojot \texttt{.Save()} metodi.
 
     Rezultātā tika iegūts modelis, kuru metriku rezultāti ir redzami \ref{ml:metrics}~attēlā.
 
@@ -41,7 +41,6 @@
     \end{figure}
 
     Kad modelis bija izveidots, tad to bija nepieciešams implementēt tīmekļa aplikācijā. Tika izveidota
-    \mintinline{csharp}{MnistClassificator} klase, kurā tika izveidota metode
-    \mintinline{csharp}{public float[] Analyze(byte[] image)}, kurai ir iespējams padot bināru virkni,
-    kas attiecīgi tiek padota izveidotam modelim, kas atgriež virkni ar float vērtībām. Šīs vērtības
-    reprezentē procentuālās vērtības ciparu klasēm.
+    \texttt{MnistClassificator} klase, kurā tika izveidota metode \mintinline{csharp}{public float[] Analyze(byte[] image)},
+    kurai ir iespējams padot bināru virkni, kas attiecīgi tiek padota izveidotam modelim, kas atgriež
+    virkni ar float vērtībām. Šīs vērtības reprezentē procentuālās vērtības ciparu klasēm.
