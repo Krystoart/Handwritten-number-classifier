@@ -30,11 +30,13 @@
         await jsRuntime.InvokeAsync<string>("SaveSvg");
         hrefString = await jsRuntime.InvokeAsync<string>("getBase64");
         if(!String.IsNullOrEmpty(hrefString)){
+            // string to remove from Base64 to convert to byte array
             string toRemove = "data:image/png;base64,";
             string testString = hrefString.Replace(toRemove, "");
             bytes = Convert.FromBase64String(testString);
             saveFile(bytes);
         } else{
+            // waiting for js runtime function
             SaveSvg(e);
         }
     }
@@ -71,7 +73,7 @@
 \end{minted}
 }
 
-\par Lai pārveidotu \texttt{svg} failu uz \texttt{png} failu, tika izmantota \texttt{javascript} valoda un funkcija, kas tika pieminēta vienā no \texttt{stackoverflow} jautājuma atbildēm \cite{stackoverflow_answer}.
+\par Lai pārveidotu \texttt{svg} failu uz \texttt{png} failu, tika izmantota \texttt{javascript} valoda un funkcija, kas tika pieminēta vienā no \texttt{stackoverflow} jautājuma atbildēs \cite{stackoverflow_answer}.
 
 {
 \setstretch{1.0}
