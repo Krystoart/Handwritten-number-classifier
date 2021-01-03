@@ -52,6 +52,8 @@
         string newPoints = "";
         foreach(string point in splittedPoints)
         {
+            // polyline points are string of x and y
+            // pair digits, separated by space
             if(Regex.Match(point, @"\d+\s\d+").Success)
             {
                 string[] pair = point.Split(" ");
@@ -62,6 +64,7 @@
                 newPoints += "," + x.ToString() + " " + y.ToString();
             }
             else
+            // polyline points can contain only one digit
             {
                 Double p = Double.Parse(point);
                 p *= scale;
@@ -119,3 +122,13 @@
     }
 \end{minted}
 }
+
+\par \texttt{javascript} valodā izveidotās funkcijas kodā tika izsauktas ar šo komandu:
+
+{
+\setstretch{1.0}
+\begin{minted}[]{csharp}
+    await jsRuntime.InvokeAsync<string>("SaveSvg");
+\end{minted}
+}
+
