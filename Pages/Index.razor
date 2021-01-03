@@ -43,20 +43,22 @@
     <div class="canvas" style="width:340px">
         <div class="history">
             @if(guesses.Count > 0){
-                @for(int i=0; i<guesses.Count(); i++)
+                int index = 0;
+                @foreach(var guess in guesses)
                 {
                     <label>
-                        <input type="radio" name="guess" @onclick="(e) => GetSelection(i-1, e)">
+                        <input type="radio" name="guess" @onclick= "(e) => GetSelection(guess, e)" >
                         <div class="guessed">
-                            @guesses[i]
-                        <div class="results">
-                            @for(int j=0; j<guessValues[i].Count(); j++)
-                            {
-                                <div>@guessValues[i][j]</div>
-                            }
-                        </div>
+                            @guess
+                            <div class="results">
+                                @for(int j=0; j<guessValues[index].Count(); j++)
+                                {
+                                    <div>@guessValues[index][j]</div>
+                                }
+                            </div>
                         </div>
                     </label>
+                    index++;
                 }
             }
         </div>
@@ -116,9 +118,9 @@
         mouseIsOutOfSvg = await jsRuntime.InvokeAsync<bool>("MouseIsOutOfSvg", e);
     }
 
-    protected void GetSelection(int itemIndex,MouseEventArgs e)
+    protected void GetSelection(RenderFragment element,MouseEventArgs e)
     {
-        selectedItemIndex = itemIndex;
+        selectedItemIndex = guesses.IndexOf(element);
     }
 
     protected void DeleteSelection(MouseEventArgs e)
@@ -127,7 +129,6 @@
         {
             guesses.RemoveAt(selectedItemIndex);
             guessValues.RemoveAt(selectedItemIndex);
-
         }
     }
 
