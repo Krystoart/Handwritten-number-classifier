@@ -3,3 +3,12 @@
     Lai šī atskaite nekļūtu pārāk gara, tad tiks apskatītas tikai galvenās koda daļas, gan priekš
     modeļa apmācīšanas, gan modeļa implementacijas.
 
+    Trennēšanas processā bija nepieciešams \texttt{MNIST} datus sakārtotā formā uzglabāt atmiņā, tapēc
+    tika izveidotas 2 klases: \texttt{MnistList} un \texttt{MnistItem}. \texttt{MnistItem} klase tieši
+    uzglabā pikseļu vērtības un attiecīgo bildes ciparu. \texttt{MnistList} ir klases mainīgais, kurā
+    tiek uzglabāts masīvs ar \texttt{MnistItem} klasēm. \texttt{MnistItem} ir klase kurā tiek uzglabāta
+    viena bilde un šīs bildes cipars. Šaj klasei ir 2 galvenie mainīgie: \texttt{Pixels}, kas ir masīvs
+    ar float vērtībām, un \texttt{Label}, kas ir float vērtība. Lai ielasītu datus ir izveidota parsēšanas
+    funkcija, kas ir \texttt{MnistList} konstruktors un to ir iespējams apskatīt sekojoši:
+
+    \input{pages/code/mnistList.tex}
