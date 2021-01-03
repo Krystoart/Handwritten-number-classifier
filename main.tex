@@ -7,7 +7,8 @@
 \usepackage{listings}
 \usepackage{float}
 
-\usepackage[style=numeric]{biblatex}
+% Add bibliography
+\usepackage[backend=biber, sorting=none, style=numeric]{biblatex}
 \addbibresource{bibliography.bib}
 
 % Math
@@ -76,8 +77,9 @@
     % Conclusions after the project
     \input{pages/conclusionPage.tex}
 
-    % References to used materials in the report
-    \input{pages/referencePage.tex}
+    % % References to used materials in the report
+    \section{References}
+        \printbibliography[heading=none]
 
     % Appendix of extra materials
     \input{pages/appendixPage.tex}
