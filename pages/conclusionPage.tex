@@ -3,21 +3,22 @@
     Darba koncepts likās samērā vienkāršs, un noteikti cilvēki, kas ar šādām tehnoloģijām ir jau
     ilgāku laiku strādājuši, šāda veida projekta izveide būtu vienkāršs process, bet tā kā darba autoriem
     šī bija pirmā pieredze, strādājot ar šādām tehnoloģijām, tad šī projekta izveide sagādāja dažādas
-    grūtības. Projekta izveides procesā abi darba autori iemācījās daudz ko jaunu  un izsecināja
+    grūtības. Projekta izveides procesā abi darba autori iemācījās daudz ko jaunu  un secināja
     dažādas lietas par \texttt{C\#} ekosistēmu.
 
     Galvenie secinājumi:
     \begin{itemize}
         \item \texttt{C\#} valodai un ietvariem ir labs atbalsts uz \texttt{Windows} operētājsistēmas;
         \item Strādāt ar \texttt{C\#} ietvariem un bibliotēkām ārpus \texttt{Windows} operētājsistēmas ir ļoti apgrūtinoši;
-        \item Vispārīgi \texttt{C\#} mašīnmācīšanās ietvariem ir ļoti slikts uz \texttt{unix} bāzētām operētājsistēmām;
-        \item \texttt{C\#} mašīnmācīšanās ietvari nenodrošina labu lietotāju pieredzi;
+        \item Darbs uz \texttt{Linux} bāzētām operētājsistēmām ir apgrūtināts, jo daudzas \texttt{Microsoft} bibliotēkas nav pieejamas ārpus \texttt{Windows} operētājsistēmas;
+        \item Ļoti daudzām \texttt{Microsoft} vizuālām bibliotēkām nav atbalsts uz \texttt{Linux} bāzētām operētājsistēmām;
+        \item Projekta uzstādīšana ar \texttt{C\#} mašīnmācīšanās ietvaru uz \texttt{Linux} sistēmu ir apgrūtinoša un sarežģīta;
         \item Liela daļa \texttt{C\#} mašīnmācīšanās ietvaru ir vienkārši "\textit{api wrappers}" pāri python ietvariem kā, piemēram, \texttt{PyTorch} un \texttt{TensorFlow};
         \item \texttt{ML.NET} ir samērā spēcīgs rīks priekš mazu mašīnmācīšanās modeļu izveides;
-        \item \texttt{ML.NET} ir tik ļoti abstrahēts, ka to ir ļoti grūti izmantot un izprast;
+        \item \texttt{ML.NET} funkcijas ir ļoti abstrahētas, kas apgrūtina izprast to kā strādā šīs funkcijas;
+        \item \texttt{ML.NET} dokumentācija ļoti slikti apraksta to kā strādā to funkcijas;
+        \item Ir ļoti daudz piemēri par to kā strādāt ar \texttt{ML.NET} ietvaru;
         \item Ir ļoti svarīgi izveidot pareizu modeļa arhitektūru, lai tas strādātu pareizi arī nestandarta apstākļos;
-        \item \texttt{Python} un tā ietvari piedāvā labāku atbalstu priekš mašīnmācīšanās modeļu izveides nekā \texttt{C\#};
     \end{itemize}
-
 
     \par Tīmekļa aplikācijas izstrādei alternatīva bija izveidot \texttt{WPF} aplikāciju, ar kuru darba autori jau ir strādājuši kursa ietvaros. Izstrādājot projektu ar šo metodi, iespējams, ka darbs būtu paveikts ātrāk, būtu papildināts ar funkcionalitāti, papildus elementiem. Strādājot ar Blazor ietvaru, pagāja laiks, līdz tas tika iepazīts, tika saprasta tā funkcionalitāte un iespējas. Dažas no projektā izveidotajām funkcijām tika rakstītas \texttt{javascript} valodā, jo netika atrasta alternatīva \texttt{C\#} valodā.
