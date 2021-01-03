@@ -23,9 +23,18 @@
 - texlive-xetex/focal,focal,now 2019.20200218-1
 - Pyhon2 `minted` package
 - Times New Roman fonts
+- biber
 
 ### Compilation
 
+These commands need to be run in order:
+
+```sh
+xelatex -synctex=1 -interaction=nonstopmode -file-line-error --shell-escape main.tex
+```
+```sh
+biber main
+```
 ```sh
 xelatex -synctex=1 -interaction=nonstopmode -file-line-error --shell-escape main.tex
 ```
