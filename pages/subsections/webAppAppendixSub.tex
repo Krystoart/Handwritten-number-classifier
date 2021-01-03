@@ -5,7 +5,8 @@
 {
 \setstretch{1.0}
 \begin{minted}[]{csharp}
-    private RenderFragment CreateSvg(List<RenderFragment> polylines) => builder =>
+    private RenderFragment CreateSvg(List<RenderFragment> polylines) =>
+    builder =>
     {
         int index = 0;
         builder.OpenElement(index++, "svg");
@@ -76,12 +77,16 @@
 \setstretch{1.0}
 \begin{minted}[]{javascript}
     function SaveSvg() {
-        var mySVG = document.getElementById('mainSvg'),      // Inline SVG element
-        tgtImage = document.getElementById('mainCanvas'),      // Where to draw the result
-        can      = document.createElement('canvas'), // Not shown on page
-        ctx      = can.getContext('2d'),
-        loader   = new Image;                        // Not shown on page
-        loader.width  = can.width  = tgtImage.width;
+        // Inline SVG element
+        var mySVG = document.getElementById('mainSvg'),
+        // Where to draw the result
+        tgtImage = document.getElementById('mainCanvas'),
+        // Not shown on page
+        can = document.createElement('canvas'),
+        ctx = can.getContext('2d'),
+        // Not shown on page
+        loader = new Image;
+        loader.width = can.width = tgtImage.width;
         loader.height = can.height = tgtImage.height;
         let waitingForResult = true;
         let result = "";
