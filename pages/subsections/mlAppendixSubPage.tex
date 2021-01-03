@@ -1,37 +1,36 @@
 \subsection{Mašīnmācīšanās modelis}
 
-    Lai šī atskaite nekļūtu pārāk gara, tad tiks apskatītas tikai galvenās koda daļas, gan priekš
-    modeļa apmācīšanas, gan modeļa implementacijas.
+    Šajā sadaļā tiks apskatītas tikai galvenās koda daļas, gan priekš
+    modeļa apmācīšanas, gan modeļa implementācijas.
 
-    Trennēšanas processā bija nepieciešams \texttt{MNIST} datus sakārtotā formā uzglabāt atmiņā, tapēc
+    Trenēšanas procesā bija nepieciešams \texttt{MNIST} datus sakārtotā formā uzglabāt atmiņā, tāpēc
     tika izveidotas 2 klases: \texttt{MnistList} un \texttt{MnistItem}. \texttt{MnistItem} klase tieši
     uzglabā pikseļu vērtības un attiecīgo bildes ciparu. \texttt{MnistList} ir klases mainīgais, kurā
-    tiek uzglabāts masīvs ar \texttt{MnistItem} klasēm. \texttt{MnistItem} ir klase kurā tiek uzglabāta
-    viena bilde un šīs bildes cipars. Šaj klasei ir 2 galvenie mainīgie: \texttt{Pixels}, kas ir masīvs
-    ar float vērtībām, un \texttt{Label}, kas ir float vērtība. Lai ielasītu datus ir izveidota parsēšanas
-    funkcija, kas ir \texttt{MnistList} konstruktors un to ir iespējams apskatīt sekojoši:
+    tiek uzglabāts masīvs ar \texttt{MnistItem} klasēm. \texttt{MnistItem} ir klase, kurā tiek uzglabāta
+    viena bilde un šīs bildes cipars. Šai klasei ir 2 galvenie mainīgie: \texttt{Pixels}, kas ir masīvs
+    ar float vērtībām, un \texttt{Label}, kas ir float vērtība. Lai ielasītu datus, ir izveidota parsēšanas
+    funkcija, kas ir \texttt{MnistList} konstruktors, un to ir iespējams apskatīt sekojoši:
 
     \input{pages/code/mnistList.tex}
 
-    Par piemēru šīm klasēm tika ņemts \texttt{GitHub} piemērs. \cite{paxbunPaxbunCntkMnistPractice2019}
-    \texttt{MNIST} dati ir binārie dati un to pikseļu vērtības ir vērtībās no 0 līdz 255,
-    bet ja modelim tiks doti normalizēti dati, kas ir vērtībās no 0 līdz 1, tad tas
-    uztrennēsies labāk. Tapēc \texttt{MnistItem} klases konstruktorā šie dati tiek
+    Par piemēru šīm klasēm tika ņemts \texttt{GitHub} piemērs \cite{paxbunPaxbunCntkMnistPractice2019}.
+    \texttt{MNIST} dati ir binārie dati un to pikseļu vērtības ir intervālā no 0 līdz 255,
+    bet, ja modelim tiks doti normalizēti dati, kas ir vērtībās no 0 līdz 1, tad tas
+    uztrenēsies labāk. Tāpēc \texttt{MnistItem} klases konstruktorā šie dati tiek
     normalizēti.
 
     \input{pages/code/mnistItem.tex}
 
-    Pēc datu ielasīšanas ir nepieciešams apmācīt modeli. Priekš tā tika izveidota funkcija. Lai izveidotu
-    šo funkciju tika ņemts par piemēru jau eksistējošs piemērs no \texttt{ML.NET} \texttt{GitHub}
-    repozitorija. \cite{DotnetMachinelearningsamples2021} Dotajā piemērā datu kopa, kas tika izmantota
-    neatbilda īstajai \texttt{MNIST} datu kopai, bet daudz mazākai datu kopai, tapēc šo piemēru bija
-    nepieciešams pārveidot, lai tas strādātu uz īsto \texttt{MNIST} datu kopu. \cite{MNISTHandwrittenDigit}
+    Pēc datu ielasīšanas ir nepieciešams apmācīt modeli. Priekš tā tika izveidota funkcija, tika ņemts jau eksistējošs piemērs no \texttt{ML.NET} \texttt{GitHub}
+    repozitorija \cite{DotnetMachinelearningsamples2021}. Dotajā piemērā izmantotā datu kopa
+    neatbilda īstajai \texttt{MNIST} datu kopai, bet gan daudz mazākai datu kopai, tāpēc šo piemēru bija
+    jāpārveido, lai tas darbotos ar nepieciešamo \texttt{MNIST} datu kopu. \cite{MNISTHandwrittenDigit}
 
     \input{pages/code/mlTraining.tex}
 
     Rezultātā tika izveidots modelis, kuru bija nepieciešams implementēt tīmekļa aplikācijā.
-    Tīmekļa aplikācijā tika izveidota klase \texttt{MnistClassificator}, kur tika izveidota metode, kurai
-    padodot masīvu ar pikseļu vērtībām tiek atgriests masīvs ar float vērtībām, kur katra no vērtībām
+    Tika izveidota klase \texttt{MnistClassificator} ar metodi, kura saņem masīvu ar pikseļu vērtībām un
+     atgriež masīvu ar float vērtībām, kur katrs elements
     atbilst kādai no ciparu klasēm.
 
     \input{pages/code/mlImplement.tex}
