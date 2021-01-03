@@ -7,10 +7,13 @@
     ietvari jau eksistē \texttt{C\#} ekosistēmā. Pēc vairāku ietvaru izpētes kā \texttt{PyTorch.NET},
     \texttt{Keras.NET}, \texttt{ML.NET} un \texttt{CNTK}. Sākumā bija plānots izmantot \texttt{CNTK},
     bet izpētes processā tika secināts, ka Microsoft ir pārtraukuši atbalstu \texttt{CNTK} un vairs
-    to neuzlabos un neatjaunos, tapēc beigas tika izvēlēts \texttt{ML.NET}.
+    to neuzlabos un neatjaunos \cite{chrisbasogluCNTKReleaseNotes}, tapēc beigas tika izvēlēts \texttt{ML.NET}.
 
     Attiecīgi tika izveidota programma, kas apmāca modeli izmantojot \texttt{MNIST} datu kopu un
-    šīs programmas darbība ir aprakstīta \ref{ml:train}~attēlā.
+    šīs programmas darbība ir aprakstīta \ref{ml:train}~attēlā. Kā piemēri tika izmntoti citi jau
+    eksistējoši \texttt{GithHub} projekti un \texttt{ML.NET} un \texttt{MNIST} dokumentācija.
+    \cite{DotnetMachinelearningsamples2021} \cite{kexugitTestRunWorking} \cite{MLNETTutorial}
+    \cite{natkeMLNETDocumentation} \cite{paxbunPaxbunCntkMnistPractice2019}
 
     \begin{figure}[H]
         \centering
@@ -19,8 +22,8 @@
         \label{ml:train}
     \end{figure}
 
-    Sākumā tika iegūti \texttt{MNIST} dati no "THE MNIST DATABASE" [insert reference]. Tie ir 4 bināri
-    faili un tos diagrammā var redzēt "Training data" un "Testing data" kvadrātos. Pēc datu iegūšanas
+    Sākumā tika iegūti \texttt{MNIST} dati no "THE MNIST DATABASE" \cite{MNISTHandwrittenDigit}. Tie ir
+    4 bināri faili un tos diagrammā var redzēt "Training data" un "Testing data" kvadrātos. Pēc datu iegūšanas
     tika izveidots datu parser funkcija, kas ielasa visus datus atmiņā un sadala to pa klasēm un šīs
     klases ir \texttt{MnistList} un \texttt{MnistItem}. Izmantojot \texttt{ML.NET} tiek nodefinēta
     konfigurācija prieks \texttt{ML.NET} "pipeline". Konfigurācijā ietilpst mainīgo sasaistīšana un
