@@ -18,3 +18,16 @@
         \caption{ML modeļa trennēšanas diagramma}
         \label{ml:train}
     \end{figure}
+
+    Sākumā tika iegūti \texttt{MNIST} dati no "THE MNIST DATABASE" [insert reference]. Tie ir 4 bināri
+    faili un tos diagrammā var redzēt "Training data" un "Testing data" kvadrātos. Pēc datu iegūšanas
+    tika izveidots datu parser funkcija, kas ielasa visus datus atmiņā un sadala to pa klasēm un šīs
+    klases ir "MnistList" un "MnistItem". Izmantojot \texttt{ML.NET} tiek nodefinēta konfigurācija
+    prieks \texttt{ML.NET} "pipeline". Konfigurācijā ietilpst mainīgo sasaistīšana un modeļa veida
+    definēšana. Pēc konfigurācijas nodefinēšanas un datu ielasīšanas tiek trennēts modelis izmantojot
+    \mintinline{csharp}{.Fit()} metodi. Pēc modeļa trennēšanas ir nepieciešams pārbaudīt cik labi šis
+    modelis ir uztrennēts, tapēc tiek veiktas transformācijas uz datiem, kuri tika izmantoti modeļa
+    trennēšanā, izmantojot \mintinline{csharp}{.Transform()} metodi, un izmanotjot šos datus tiek
+    veikta modeļa izvērtēšana izmantojot \mintinline{csharp}{.Evaluate()} metodi. Pēdejais solis ir
+    to saglabāt. Tas tiek izdarīts izmantojot \mintinline{csharp}{.Save()} metodi.
+
