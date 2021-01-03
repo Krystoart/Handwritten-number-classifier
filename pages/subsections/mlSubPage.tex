@@ -7,7 +7,10 @@
     ietvari jau eksistē \texttt{C\#} ekosistēmā. Tika atrasti tādi ietvari, kā \texttt{PyTorch.NET},
     \texttt{Keras.NET}, \texttt{ML.NET} un \texttt{CNTK}. Sākumā bija plānots izmantot \texttt{CNTK},
     bet izpētes processā tika secināts, ka Microsoft ir pārtraukuši atbalstu \texttt{CNTK} un vairs
-    to neuzlabos un neatjaunos \cite{chrisbasogluCNTKReleaseNotes}. Šī iemesla dēļ tika izvēlēts \texttt{ML.NET} ietvars.
+    to neuzlabos un neatjaunos \cite{chrisbasogluCNTKReleaseNotes}. Šī iemesla dēļ netika izmantots
+    \texttt{CNTK} ietvars. Ņēmot vērā tādus faktorus kā laiku un darba autora pieredzi tika izvēlēts
+    \texttt{ML.NET} ietvars. Citi ietvari netika izmantoti, jo modeļa izstrāde ar tiem aizņemtu
+    daudz vairāk laika, tapēc būtu iespēja, ka darbs netiktu pabeigts laikā.
 
     Attiecīgi tika izveidota programma, kas apmāca modeli, izmantojot \texttt{MNIST} datu kopu, un
     šīs programmas darbība ir aprakstīta \ref{ml:train}~attēlā. Kā piemēri tika izmantoti citi jau
