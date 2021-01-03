@@ -35,6 +35,10 @@
     right=20mm,
 }
 
+% Add bibliography
+\usepackage[backend=biber, sorting=none, defernumbers=true, style=numeric]{biblatex}
+\addbibresource{bibl.bib}
+
 % Set line spacing
 \renewcommand{\baselinestretch}{1.5}
 
@@ -76,11 +80,13 @@
     % Conclusions after the project
     \input{pages/conclusionPage.tex}
 
-    % References to used materials in the report
-    \input{pages/referencePage.tex}
+    % % References to used materials in the report
+    % \input{pages/referencePage.tex}
 
     % Appendix of extra materials
     \input{pages/appendixPage.tex}
 
+    \newpage
+    \printbibliography
 
 \end{document}
