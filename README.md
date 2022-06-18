@@ -1,4 +1,4 @@
-# VPL course coursework - handwritten digit classifier
+# VPL course coursework - handwritten number classifier
 
 ## Development stack
 
